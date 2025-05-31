@@ -1,0 +1,61 @@
+.filtre-container {
+  margin: 1.5rem 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.filtre-container label {
+  font-weight: 500;
+  color: #743e1d;
+}
+
+.filtre-container select {
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #ffd23f;
+  background: #fff8f0;
+  color: #743e1d;
+  font-size: 1rem;
+}
+
+.table-absences {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+  background: #fff;
+  box-shadow: 0 2px 8px #0001;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table-absences th, .table-absences td {
+  padding: 0.7rem 1rem;
+  text-align: left;
+}
+
+.table-absences th {
+  background: #ffd23f;
+  color: #743e1d;
+  font-weight: 600;
+}
+
+.table-absences tr:nth-child(even) {
+  background: #f9f6f2;
+}
+
+.statut-retard {
+  background: #ffd23f;
+  color: #743e1d;
+  padding: 0.2rem 0.7rem;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.statut-absent {
+  background: #ffd23f;
+  color: #743e1d;
+  padding: 0.2rem 0.7rem;
+  border-radius: 12px;
+  font-weight: 500;
+}

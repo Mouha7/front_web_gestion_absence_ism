@@ -1,0 +1,21 @@
+<div class="classe-detail-container">
+  <h2>Détails de la classe : {{ nomClasse }}</h2>
+  <h3>Cours associés</h3>
+  <table class="table-cours" *ngIf="cours.length > 0">
+    <thead>
+      <tr>
+        <th>Nom du cours</th>
+        <th>Enseignant</th>
+        <th>Salle</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of cours">
+        <td>{{ c.nom }}</td>
+        <td>{{ c.enseignant }}</td>
+        <td>{{ c.salle }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="cours.length === 0">Aucun cours associé à cette classe.</div>
+</div>

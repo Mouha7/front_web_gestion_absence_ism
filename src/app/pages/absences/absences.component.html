@@ -1,1 +1,33 @@
 <p>absences works!</p>
+<div class="filtre-container">
+  <label for="classe-select">Filtrer par classe :</label>
+  <select id="classe-select" [(ngModel)]="selectedClasse">
+    <option value="">Toutes les classes</option>
+    <option *ngFor="let classe of classes" [value]="classe">{{ classe }}</option>
+  </select>
+</div>
+
+<table class="table-absences">
+  <thead>
+    <tr>
+      <th>Matricule</th>
+      <th>Nom</th>
+      <th>Classe</th>
+      <th>Date</th>
+      <th>Statut</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let absence of filteredAbsences">
+      <td>{{ absence.matricule }}</td>
+      <td>{{ absence.nom }}</td>
+      <td>{{ absence.classe }}</td>
+      <td>{{ absence.date }}</td>
+      <td>
+        <span [ngClass]="{'statut-retard': absence.statut === 'retard', 'statut-absent': absence.statut === 'Absent'}">
+          {{ absence.statut }}
+        </span>
+      </td>
+    </tr>
+  </tbody>
+</table>
