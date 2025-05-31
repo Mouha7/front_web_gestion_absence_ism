@@ -1,0 +1,38 @@
+/* Styles pour la page de détail d'une classe */
+.classe-detail-container {
+  margin: 2rem auto;
+  max-width: 600px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px #0001;
+  padding: 2rem;
+}
+
+.classe-detail-container h2 {
+  color: #743e1d;
+  margin-bottom: 1rem;
+}
+
+.table-cours {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table-cours th, .table-cours td {
+  padding: 0.7rem 1rem;
+  text-align: left;
+}
+
+.table-cours th {
+  background: #ffd23f;
+  color: #743e1d;
+  font-weight: 600;
+}
+
+.table-cours tr:nth-child(even) {
+  background: #f9f6f2;
+}

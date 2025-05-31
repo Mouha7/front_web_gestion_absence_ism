@@ -35,27 +35,57 @@
 }
 
 .table-absences th {
-  background: #ffd23f;
+  background: #fff8f0;
   color: #743e1d;
   font-weight: 600;
+  border-bottom: 2px solid #c7a16e;
+}
+
+.table-absences tr {
+  border-bottom: 1px solid #f0e6dd;
 }
 
 .table-absences tr:nth-child(even) {
-  background: #f9f6f2;
+  background: #fff8f0;
 }
 
 .statut-retard {
   background: #ffd23f;
   color: #743e1d;
-  padding: 0.2rem 0.7rem;
-  border-radius: 12px;
-  font-weight: 500;
+  padding: 0.2rem 0.9rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95em;
+  border: none;
+  box-shadow: 0 1px 2px #0001;
 }
 
 .statut-absent {
-  background: #ffd23f;
-  color: #743e1d;
-  padding: 0.2rem 0.7rem;
-  border-radius: 12px;
-  font-weight: 500;
+  background: #743e1d;
+  color: #ffd23f;
+  padding: 0.2rem 0.9rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95em;
+  border: none;
+  box-shadow: 0 1px 2px #0001;
+}
+
+.btn-details {
+  background: #743e1d;
+  color: #ffd23f;
+  border: none;
+  border-radius: 8px;
+  padding: 0.2rem 1.1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s;
+  cursor: pointer;
+  box-shadow: 0 1px 4px #0001;
+  font-size: 0.95em;
+}
+
+.btn-details:hover {
+  background: #5a2f13;
+  color: #ffd23f;
 }
