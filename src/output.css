@@ -598,6 +598,9 @@
   .bg-\[\#743E1D\] {
     background-color: #743E1D;
   }
+  .bg-\[\#c77b41\] {
+    background-color: #c77b41;
+  }
   .bg-black {
     background-color: var(--color-black);
   }
@@ -814,6 +817,15 @@
   }
   .whitespace-nowrap {
     white-space: nowrap;
+  }
+  .text-\[\#743E1D\] {
+    color: #743E1D;
+  }
+  .text-\[\#995c29\] {
+    color: #995c29;
+  }
+  .text-\[\#c77b41\] {
+    color: #c77b41;
   }
   .text-blue-600 {
     color: var(--color-blue-600);
