@@ -1,18 +1,16 @@
-import { Absence } from './absence.model';
-import { AbstractModel } from './abstract.model';
-import { Admin } from './utilisateur.model';
-
-export interface Justification extends AbstractModel {
-  motif: string;
+export interface Justification {
+  id: string;
+  description: string;
   documentPath: string;
   statut: StatutJustification;
   dateValidation?: Date;
-  absence: Absence | string;
-  admin?: Admin | string;
+  coursNom: string;
+  jourCours: string;
+  absenceId: string;
 }
 
 export enum StatutJustification {
-  EN_ATTENTE = 'EN ATTENTE',
+  EN_ATTENTE = 'EN_ATTENTE',
   VALIDEE = 'VALIDEE',
-  REJETEE = 'REJETE',
+  REJETEE = 'REJETEE',
 }

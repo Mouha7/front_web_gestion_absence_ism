@@ -1,13 +1,11 @@
-import { Absence } from './absence.model';
-import { AbstractModel } from './abstract.model';
-
-export interface Cours extends AbstractModel {
+export interface Cours {
+  id: string;
   nom: string;
   enseignant: string;
   salle: string;
   heureDebut: Date;
   heureFin: Date;
   jour: string;
-  pointageFerme: boolean;
-  absences?: Absence[];
+  matiereNom: string;
+  classeNom: string;
 }
