@@ -4,12 +4,16 @@ import { Etudiant } from './utilisateur.model';
 
 export interface Absence {
   id: string;
+  createdAt: Date;
   type: TypeAbsence;
   heurePointage?: Date;
   minutesRetard?: number;
   cours: Cours;
   justification?: Justification;
-  etudiant: Etudiant;
+  etudiantNom: string;
+  etudiantPrenom: string;
+  etudiantMatricule: string;
+  coursNom: string;
 }
 
 export enum TypeAbsence {

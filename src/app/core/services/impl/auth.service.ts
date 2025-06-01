@@ -17,7 +17,7 @@ export class AuthService {
 
   login(data: LoginRequestDTO): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(
-      'http://localhost:8080/api/mobile/auth/login',
+      'https://ism-absences-api.onrender.com/api/web/auth/login',
       data,
       { withCredentials: true }
     );
@@ -25,7 +25,7 @@ export class AuthService {
 
   logout(): Observable<any> {
     return this.http.post(
-      'http://localhost:8080/api/mobile/auth/logout',
+      'http://localhost:8080/api/web/auth/logout',
       {},
       { withCredentials: true }
     );

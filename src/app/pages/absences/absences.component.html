@@ -1,5 +1,8 @@
+<app-sidebar />
+
 <!-- Main Content -->
-<main class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+<main class="ml-[230px] p-8">
   <!-- Filters Section -->
   <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
     <h2 class="text-lg font-semibold text-gray-900 mb-4">Filtres</h2>
@@ -162,10 +165,10 @@
                 </div>
                 <div class="ml-4">
                   <div class="text-sm font-medium text-gray-900">
-                    {{ absence.etudiant.nom }}
+                    {{ absence.etudiantPrenom }} {{ absence.etudiantNom }}
                   </div>
                   <div class="text-sm text-gray-500">
-                    {{ absence.etudiant.matricule }}
+                    {{ absence.etudiantMatricule }}
                   </div>
                 </div>
               </div>

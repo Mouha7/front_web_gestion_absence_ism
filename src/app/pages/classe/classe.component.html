@@ -1,0 +1,82 @@
+<app-sidebar />
+
+<!-- Main Content -->
+
+<main class="ml-[230px] p-8">
+  <div class="flex items-center gap-4 mb-6 p-4 bg-gray-50 rounded-lg">
+    <label for="classe-select" class="text-gray-700"
+      >Filtrer par classe :</label
+    >
+    <!-- <select 
+    id="classe-select" 
+    [(ngModel)]="selectedClasse"
+    class="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+  >
+    <option value="">Toutes les classes</option>
+    <option *ngFor="let classe of classeStore.classes" [value]="classe.nom">{{ classe.nom }}</option>
+  </select> -->
+
+    <label for="niveau-select" class="text-gray-700">Niveau :</label>
+    <!-- <select 
+    id="niveau-select" 
+    [(ngModel)]="selectedNiveau"
+    class="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+  >
+    <option value="">Tous les niveaux</option>
+    <option *ngFor="let niveau of niveaux" [value]="niveau">{{ niveau }}</option>
+  </select> -->
+
+    <!-- <label class="text-gray-700 font-medium">Année en cours : {{ selectedAnnee }}</label> -->
+  </div>
+
+  <table
+    class="min-w-full divide-y divide-gray-200 shadow-sm rounded-lg overflow-hidden"
+  >
+    <thead class="bg-gray-100">
+      <tr>
+        <th
+          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+        >
+          Nom
+        </th>
+        <th
+          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+        >
+          Effectif
+        </th>
+        <th
+          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+        >
+          Niveau
+        </th>
+        <th
+          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+        >
+          Détails
+        </th>
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200">
+      <tr *ngFor="let classe of classes" class="hover:bg-gray-50">
+        <td
+          class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+        >
+          {{ classe.nom }}
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+          {{ classe.effectif }}
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+          {{ classe.niveau }}
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+          <a
+            class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            Détails
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</main>

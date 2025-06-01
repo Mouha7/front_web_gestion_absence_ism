@@ -8,12 +8,13 @@ import { Justification } from '../../models/justification.model';
   providedIn: 'root',
 })
 export class AbsenceService {
-  private readonly apiUrl = 'http://localhost:8080/api/mobile/etudiant/6';
+  private readonly apiUrl =
+    'https://ism-absences-api.onrender.com/api/web/absences';
   constructor(private readonly http: HttpClient) {}
 
   // récupérer tous les absences
   getAbsence(): Observable<Absence[]> {
-    return this.http.get<Absence[]>(this.apiUrl + '/absences');
+    return this.http.get<Absence[]>(this.apiUrl + '/annee-active');
   }
 
   // Récupérer une justification par ID

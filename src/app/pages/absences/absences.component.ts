@@ -3,11 +3,12 @@ import { AbsenceService } from '../../core/services/impl/absence.service';
 import { Absence } from '../../core/models/absence.model';
 import { CommonModule } from '@angular/common';
 import { Justification } from '../../core/models/justification.model';
+import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 
 @Component({
   selector: 'app-absences',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SidebarComponent],
   templateUrl: './absences.component.html',
   styleUrl: './absences.component.css',
 })
@@ -20,6 +21,7 @@ export class AbsencesComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadAbsences();
+    console.log(this.loadAbsences);
   }
 
   loadAbsences(): void {

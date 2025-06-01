@@ -1,1 +1,57 @@
-<p>sidebar works!</p>
+<nav
+  class="w-[230px] h-screen fixed bg-[#783509] pt-8 text-white flex flex-col items-center"
+>
+  <img
+    src="https://globalmentorship.org/wp-content/uploads/2024/02/Groupe-ISM.png"
+    alt="Logo ISM"
+    class="w-[120px] mb-8"
+  />
+
+  <!-- Lien principal avec icône -->
+  <a
+    href=""
+    class="text-white no-underline w-full px-5 py-3 flex items-center gap-2.5 text-2xl hover:bg-[#995c29]"
+  >
+    <i class="bi bi-people"></i> Liste étudiants
+  </a>
+  <a
+    href=""
+    class="text-white no-underline w-full px-5 py-3 flex items-center gap-2.5 text-2xl hover:bg-[#995c29]"
+  >
+    <i class="bi bi-shield-lock text-[1.2rem]"></i> Liste vigiles
+  </a>
+  <a
+    routerLink="/classes"
+    class="text-white no-underline w-full px-5 py-3 flex items-center gap-2.5 text-2xl hover:bg-[#995c29]"
+  >
+    <i class="bi bi-shield-lock text-[1.2rem]"></i> Liste classes
+  </a>
+  <a
+    routerLink="/absences"
+    class="text-white no-underline w-full px-5 py-3 flex items-center gap-2.5 text-2xl hover:bg-[#995c29]"
+  >
+    <i class="bi bi-shield-lock text-[1.2rem]"></i> Absence
+  </a>
+
+  <!-- Liens bas de sidebar -->
+  <div class="mt-auto w-full mb-5">
+    <a
+      href="#"
+      class="text-white no-underline w-full px-5 py-3 flex items-center gap-2.5 text-2xl hover:bg-[#995c29]"
+    >
+      <i class="bi bi-gear text-[1.2rem]"></i> Paramètre
+    </a>
+    <a
+      href="#"
+      class="text-white no-underline w-full px-5 py-3 flex items-center gap-2.5 text-2xl hover:bg-[#995c29]"
+    >
+      <i class="bi bi-box-arrow-right text-[1.2rem]"></i> Déconnexion
+    </a>
+    <a
+      href="#"
+      class="text-white no-underline w-full px-5 py-3 flex items-center gap-2.5 text-[0.95rem] hover:bg-[#995c29]"
+    >
+      <i class="bi bi-person-circle text-[1.2rem]"></i> Admin
+    </a>
+  </div>
+</nav>
