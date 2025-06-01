@@ -1,5 +1,6 @@
 import { Cours } from './cours.model';
 import { Justification } from './justification.model';
+import { Etudiant } from './utilisateur.model';
 
 export interface Absence {
   id: string;
@@ -8,6 +9,7 @@ export interface Absence {
   minutesRetard?: number;
   cours: Cours;
   justification?: Justification;
+  etudiant: Etudiant;
 }
 
 export enum TypeAbsence {

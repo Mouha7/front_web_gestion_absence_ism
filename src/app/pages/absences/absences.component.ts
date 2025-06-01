@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { AbsenceService } from '../../core/services/impl/absence.service';
 import { Absence } from '../../core/models/absence.model';
 import { CommonModule } from '@angular/common';
+import { Justification } from '../../core/models/justification.model';
 
 @Component({
   selector: 'app-absences',
@@ -14,21 +15,19 @@ export class AbsencesComponent implements OnInit {
   private readonly absenceService: AbsenceService = inject(AbsenceService);
 
   absences: Absence[] = [];
+  showModal = false;
+  selectedJustification: Justification | null = null;
 
   ngOnInit(): void {
-    console.log('Starting to fetch absences...');
+    this.loadAbsences();
+  }
+
+  loadAbsences(): void {
     this.absenceService.getAbsence().subscribe({
       next: (data: Absence[]) => {
-        console.log('Raw data from API:', data);
         this.absences = data;
-        console.log('Processed absences:', this.absences);
       },
-      error: (err) => {
-        console.error('Error:', err);
-      },
-      complete: () => {
-        console.log('Request completed');
-      },
+      error: (err) => console.error('Error:', err),
     });
   }
 }
