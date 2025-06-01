@@ -1,5 +1,4 @@
 import { Absence } from './absence.model';
-import { AbstractModel } from './abstract.model';
 
 export enum Role {
   ADMIN = 'ADMIN',
@@ -7,7 +6,7 @@ export enum Role {
   VIGILE = 'VIGILE',
 }
 
-export interface Admin extends AbstractModel {
+export interface Admin {
   departement: string;
   nom: string;
   prenom: string;
@@ -15,18 +14,14 @@ export interface Admin extends AbstractModel {
   role: Role.ADMIN;
 }
 
-export interface Etudiant extends AbstractModel {
+export interface Etudiant {
   matricule: string;
   nom: string;
   prenom: string;
-  email: string;
-  filiere: string;
-  niveau: string;
-  role: Role.ETUDIANT;
-  absences?: Absence[];
+  classe: string;
 }
 
-export interface Vigile extends AbstractModel {
+export interface Vigile {
   badge: string;
   nom: string;
   prenom: string;
@@ -34,14 +29,29 @@ export interface Vigile extends AbstractModel {
   role: Role.VIGILE;
 }
 
-export interface AuthRequest {
+export interface UtilisateurMobileDto {
+  id: string;
+  nom: string;
+  prenom: string;
   email: string;
-  password: string;
+  role: Role;
+  matricule?: string;
+  classe?: string;
+  absences?: Absence[];
+  departement?: string;
+  badge?: string;
 }
 
-export interface AuthResponse {
-  token: string;
-  user: UserProfile;
+export interface LoginRequestDTO {
+  email: string;
+  motDePasse: string;
+}
+
+export interface LoginResponse {
+  utilisateur: UtilisateurMobileDto;
+  userId: string;
+  role: Role;
+  redirectEndpoint: string;
 }
 
 export interface UserProfile {

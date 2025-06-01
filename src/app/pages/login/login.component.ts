@@ -1,11 +1,30 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../../core/services/impl/auth.service';
+import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
 export class LoginComponent {
+  email = '';
+  motDePasse = '';
+  error = '';
 
+  constructor(private auth: AuthService, private router: Router) {}
+
+  onSubmit() {
+    this.auth
+      .login({ email: this.email, motDePasse: this.motDePasse })
+      .subscribe({
+        next: (res) => {
+          this.auth.setCurrentUser(res);
+          this.router.navigate(['/absences']);
+        },
+        error: () => (this.error = 'Email ou mot de passe incorrect'),
+      });
+  }
 }

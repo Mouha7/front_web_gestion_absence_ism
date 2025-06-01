@@ -1,11 +1,35 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { AbsenceService } from '../../core/services/impl/absence.service';
+import { Absence } from '../../core/models/absence.model';
+import { CommonModule } from '@angular/common';
+import { Justification } from '../../core/models/justification.model';
+import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 
 @Component({
   selector: 'app-absences',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule, SidebarComponent],
   templateUrl: './absences.component.html',
-  styleUrl: './absences.component.css'
+  styleUrl: './absences.component.css',
 })
-export class AbsencesComponent {
+export class AbsencesComponent implements OnInit {
+  private readonly absenceService: AbsenceService = inject(AbsenceService);
 
+  absences: Absence[] = [];
+  showModal = false;
+  selectedJustification: Justification | null = null;
+
+  ngOnInit(): void {
+    this.loadAbsences();
+    console.log(this.loadAbsences);
+  }
+
+  loadAbsences(): void {
+    this.absenceService.getAbsence().subscribe({
+      next: (data: Absence[]) => {
+        this.absences = data;
+      },
+      error: (err) => console.error('Error:', err),
+    });
+  }
 }
