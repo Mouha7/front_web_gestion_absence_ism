@@ -1,1 +1,30 @@
 <p>absences works!</p>
+<div class="filtre-container">
+  <label for="classe-select">Filtrer par classe :</label>
+  <select id="classe-select" [(ngModel)]="selectedClasse">
+    <option value="">Toutes les classes</option>
+    <option *ngFor="let classe of classeStore.classes" [value]="classe.nom">{{ classe.nom }}</option>
+  </select>
+  <label class="annee-actuelle">Année en cours : {{ selectedAnnee }}</label>
+</div>
+
+<table class="table-absences">
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Effectif</th>
+      <th>Niveau</th>
+      <th>Détails</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let classe of filteredClasses" [appHighlight]="'#FFD23F'">
+      <td>{{ classe.nom }}</td>
+      <td>{{ classe.effectif }}</td>
+      <td>{{ classe.niveau }}</td>
+      <td>
+        <a [routerLink]="['/classes', classe.nom]" class="btn-details">Détails</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
