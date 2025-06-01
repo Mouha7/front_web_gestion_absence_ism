@@ -11,16 +11,20 @@ import { FormsModule } from '@angular/forms';
 })
 export class LoginComponent {
   email = '';
-  password = '';
+  motDePasse = '';
   error = '';
 
   constructor(private auth: AuthService, private router: Router) {}
 
   onSubmit() {
-    if (this.auth.login(this.email, this.password)) {
-      this.router.navigate(['/absences']);
-    } else {
-      this.error = 'Identifiants invalides';
-    }
+    this.auth
+      .login({ email: this.email, motDePasse: this.motDePasse })
+      .subscribe({
+        next: (res) => {
+          this.auth.setCurrentUser(res);
+          this.router.navigate(['/absences']);
+        },
+        error: () => (this.error = 'Email ou mot de passe incorrect'),
+      });
   }
 }

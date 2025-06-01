@@ -1,35 +1,49 @@
 import { Injectable } from '@angular/core';
-import { Role } from '../../models/utilisateur.model';
+import {
+  LoginRequestDTO,
+  LoginResponse,
+  Role,
+} from '../../models/utilisateur.model';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private isLoggedIn = false;
-  private userRole: Role | null = null;
+  private currentUser?: LoginResponse;
 
-  login(email: string, password: string): boolean {
-    // Authentification simple : admin@exemple.com / admin123
-    if (email === 'admin@exemple.com' && password === 'admin123') {
-      this.isLoggedIn = true;
-      this.userRole = Role.ADMIN;
-      return true;
-    }
-    this.isLoggedIn = false;
-    this.userRole = null;
-    return false;
+  constructor(private http: HttpClient) {}
+
+  login(data: LoginRequestDTO): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(
+      'http://localhost:8080/api/mobile/auth/login',
+      data,
+      { withCredentials: true }
+    );
   }
 
-  logout(): void {
-    this.isLoggedIn = false;
-    this.userRole = null;
+  logout(): Observable<any> {
+    return this.http.post(
+      'http://localhost:8080/api/mobile/auth/logout',
+      {},
+      { withCredentials: true }
+    );
   }
 
-  isAuthenticated(): boolean {
-    return this.isLoggedIn;
+  setCurrentUser(user: LoginResponse) {
+    this.currentUser = user;
   }
 
-  isAdmin(): boolean {
-    return this.userRole === Role.ADMIN;
+  getCurrentUser(): LoginResponse | undefined {
+    return this.currentUser;
+  }
+
+  isLoggedIn(): boolean {
+    return !!this.currentUser;
+  }
+
+  getRole(): string | undefined {
+    return this.currentUser?.role;
   }
 }
