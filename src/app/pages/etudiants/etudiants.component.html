@@ -105,13 +105,11 @@
       background-color: #c77b41;
       color: #fff;
       border-color: #562500;
-
     }
   </style>
 </head>
 <body>
 
-  
   <nav class="sidebar">
     <img src="https://globalmentorship.org/wp-content/uploads/2024/02/Groupe-ISM.png" alt="Logo ISM">
     <a href="#"><i class="bi bi-people"></i> Liste étudiants</a>
@@ -122,19 +120,17 @@
     </div>
   </nav>
 
-  
   <div class="content">
     <h3>Liste des étudiants actifs 2024-2025</h3>
 
-    
     <div class="search-bar">
       <input type="text" class="form-control" placeholder="Rechercher un étudiant" />
       <button class="btn btn-outline-light">Rechercher</button>
     </div>
 
-    
     <div class="filters">
       <select class="form-select" style="max-width: 200px;">
+        <option value="all">-- Toutes les classes --</option>
         <option>Classe</option>
         <option>GLRS</option>
         <option>CDSD</option>
@@ -145,65 +141,69 @@
       </select>
     </div>
 
-   
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th>Matricule</th>
-      <th>Nom</th>
-      <th>Prénom</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>ISM2224/DK-001</td>
-      <td>Ndiaye</td>
-      <td>Ablaye</td>
-      <td><button class="btn-details">Détails</button></td>
-    </tr>
-    <tr>
-      <td>ISM2224/DK-002</td>
-      <td>Diop</td>
-      <td>Babacar</td>
-      <td><button class="btn-details">Détails</button></td>
-    </tr>
-    <tr>
-      <td>ISM2224/DK-003</td>
-      <td>Fall</td>
-      <td>Sokhna</td>
-      <td><button class="btn-details">Détails</button></td>
-    </tr>
-    <tr>
-      <td>ISM2224/DK-004</td>
-      <td>Lo</td>
-      <td>Mbaye</td>
-      <td><button class="btn-details">Détails</button></td>
-    </tr>
-    <tr>
-      <td>ISM2224/DK-005</td>
-      <td>Guissé</td>
-      <td>Penda</td>
-      <td><button class="btn-details">Détails</button></td>
-    </tr>
-    <tr>
-      <td>ISM2224/DK-006</td>
-      <td>Diakhoumpa</td>
-      <td>Aïssatou</td>
-      <td><button class="btn-details">Détails</button></td>
-    </tr>
-    <tr>
-      <td>ISM2224/DK-007</td>
-      <td>Dieng</td>
-      <td>Fanta</td>
-      <td><button class="btn-details">Détails</button></td>
-    </tr>
-  </tbody>
-</table>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Matricule</th>
+          <th>Nom</th>
+          <th>Prénom</th>
+          <th>Classe</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>ISM2224/DK-001</td>
+          <td>Ndiaye</td>
+          <td>Ablaye</td>
+          <td>GLRS</td>
+          <td><button class="btn-details">Détails</button></td>
+        </tr>
+        <tr>
+          <td>ISM2224/DK-002</td>
+          <td>Diop</td>
+          <td>Babacar</td>
+          <td>IAGE</td>
+          <td><button class="btn-details">Détails</button></td>
+        </tr>
+        <tr>
+          <td>ISM2224/DK-003</td>
+          <td>Fall</td>
+          <td>Sokhna</td>
+          <td>CDSD</td>
+          <td><button class="btn-details">Détails</button></td>
+        </tr>
+        <tr>
+          <td>ISM2224/DK-004</td>
+          <td>Lo</td>
+          <td>Mbaye</td>
+          <td>TTL</td>
+          <td><button class="btn-details">Détails</button></td>
+        </tr>
+        <tr>
+          <td>ISM2224/DK-005</td>
+          <td>Guissé</td>
+          <td>Penda</td>
+          <td>MOSIEF</td>
+          <td><button class="btn-details">Détails</button></td>
+        </tr>
+        <tr>
+          <td>ISM2224/DK-006</td>
+          <td>Diakhoumpa</td>
+          <td>Aïssatou</td>
+          <td>GLRS</td>
+          <td><button class="btn-details">Détails</button></td>
+        </tr>
+        <tr>
+          <td>ISM2224/DK-007</td>
+          <td>Dieng</td>
+          <td>Fanta</td>
+          <td>MAIE</td>
+          <td><button class="btn-details">Détails</button></td>
+        </tr>
+      </tbody>
+    </table>
 
-
-
-    =
     <nav>
       <ul class="pagination">
         <li class="page-item active"><a class="page-link" href="#">1</a></li>
@@ -212,10 +212,8 @@
         <li class="page-item"><a class="page-link" href="#">...</a></li>
       </ul>
     </nav>
-
   </div>
 
-  
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
