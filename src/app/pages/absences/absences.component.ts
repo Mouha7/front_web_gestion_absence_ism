@@ -14,7 +14,9 @@ import { HighlightDirective } from '../../directives/highlight.directive';
 export class AbsencesComponent {
   selectedClasse = '';
   selectedNiveau = '';
+  selectedAnnee = '2024-2025';
   niveaux = ['L1', 'L2', 'L3'];
+  annees = ['2024-2025', '2023-2024'];
 
   constructor(public classeStore: ClasseStore) {
     if (this.classeStore.classes.length === 0) {
@@ -35,6 +37,9 @@ export class AbsencesComponent {
     }
     if (this.selectedNiveau) {
       classes = classes.filter((c: { niveau: string }) => c.niveau === this.selectedNiveau);
+    }
+    if (this.selectedAnnee) {
+      classes = classes.filter((c: { annee?: string }) => c.annee === this.selectedAnnee);
     }
     return classes;
   }

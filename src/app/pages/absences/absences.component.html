@@ -1,16 +1,11 @@
 <p>absences works!</p>
 <div class="filtre-container">
-  <label for="niveau-select">Filtrer par niveau :</label>
-  <select id="niveau-select" [(ngModel)]="selectedNiveau">
-    <option value="">Tous les niveaux</option>
-    <option *ngFor="let niveau of niveaux" [value]="niveau">{{ niveau }}</option>
-  </select>
-
   <label for="classe-select">Filtrer par classe :</label>
   <select id="classe-select" [(ngModel)]="selectedClasse">
     <option value="">Toutes les classes</option>
     <option *ngFor="let classe of classeStore.classes" [value]="classe.nom">{{ classe.nom }}</option>
   </select>
+  <label class="annee-actuelle">Année en cours : {{ selectedAnnee }}</label>
 </div>
 
 <table class="table-absences">
