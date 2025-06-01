@@ -1,1 +1,129 @@
-<p>login works!</p>
+<div
+  id="loginPage"
+  class="min-h-screen bg-[#743E1D] flex items-center justify-center p-4"
+>
+  <div class="w-full max-w-6xl mx-auto">
+    <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
+      <div class="flex flex-col lg:flex-row">
+        <!-- Left Side - Image Section -->
+        <div
+          class="lg:w-1/2 bg-gradient-to-br from-[#743E1D] to-brown-primary p-8 flex flex-col justify-center items-center text-white"
+        >
+          <div class="text-center mb-8">
+            <div
+              class="w-32 h-32 mx-auto mb-6 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm"
+            >
+              <i class="fas fa-graduation-cap text-6xl text-white"></i>
+            </div>
+            <h1 class="text-4xl font-bold mb-4">Système de Gestion</h1>
+            <h2 class="text-2xl font-semibold mb-4">des Absences</h2>
+            <p class="text-lg opacity-90 leading-relaxed">
+              Gérez efficacement les présences et absences de vos étudiants avec
+              notre solution moderne et intuitive.
+            </p>
+          </div>
+
+          <!-- Decorative Elements -->
+          <div class="relative w-full max-w-md">
+            <div class="login-image h-48 rounded-lg shadow-lg"></div>
+            <div
+              class="absolute -top-4 -right-4 w-16 h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm"
+            >
+              <i class="fas fa-qrcode text-2xl text-white"></i>
+            </div>
+            <div
+              class="absolute -bottom-4 -left-4 w-12 h-12 bg-orange-200 rounded-full flex items-center justify-center"
+            >
+              <i class="fas fa-user-check text-orange-600"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side - Login Form -->
+        <div class="lg:w-1/2 p-8 lg:p-12">
+          <div class="max-w-md mx-auto">
+            <div class="text-center mb-8">
+              <h3 class="text-3xl font-bold text-gray-800 mb-2">Connexion</h3>
+              <p class="text-gray-600">Accédez à votre espace administrateur</p>
+            </div>
+
+            <form class="space-y-6">
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                  <i class="fas fa-envelope text-orange-primary mr-2"></i>
+                  Adresse email
+                </label>
+                <input
+                  type="email"
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-primary focus:border-orange-primary transition-all duration-200 bg-gray-50 focus:bg-white"
+                  placeholder="admin@exemple.com"
+                />
+              </div>
+
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                  <i class="fas fa-lock text-orange-primary mr-2"></i>
+                  Mot de passe
+                </label>
+                <div class="relative">
+                  <input
+                    type="password"
+                    id="password"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-primary focus:border-orange-primary transition-all duration-200 bg-gray-50 focus:bg-white pr-12"
+                    placeholder="••••••••"
+                  />
+                  <button
+                    type="button"
+                    onclick="togglePassword()"
+                    class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-orange-primary transition-colors"
+                  >
+                    <i class="fas fa-eye" id="eyeIcon"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between">
+                <label class="flex items-center">
+                  <input
+                    type="checkbox"
+                    class="w-4 h-4 text-orange-primary border-gray-300 rounded focus:ring-orange-primary"
+                  />
+                  <span class="ml-2 text-sm text-gray-600"
+                    >Se souvenir de moi</span
+                  >
+                </label>
+                <a
+                  href="#"
+                  class="text-sm text-orange-primary hover:text-brown-primary transition-colors"
+                >
+                  Mot de passe oublié ?
+                </a>
+              </div>
+
+              <button
+                type="submit"
+                onclick="showDashboard()"
+                class="w-full bg-[#743E1D] text-white py-3 px-6 rounded-lg font-semibold hover:from-orange-600 hover:to-brown-600 transform hover:scale-105 transition-all duration-200 shadow-lg"
+              >
+                <i class="fas fa-sign-in-alt mr-2"></i>
+                Se connecter
+              </button>
+            </form>
+
+            <div class="mt-8 text-center">
+              <p class="text-sm text-gray-600">
+                Besoin d'aide ?
+                <a
+                  href="#"
+                  class="text-orange-primary hover:text-brown-primary font-semibold transition-colors"
+                >
+                  Contactez le support
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
