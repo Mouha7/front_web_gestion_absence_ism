@@ -24,7 +24,7 @@ export interface AbsenceDetail {
 }
 
 export enum TypeAbsence {
-  ABSENCE_COMPLETE = 'ABSENCE_COMPLET',
+  ABSENCE_COMPLETE = 'ABSENCE',
   RETARD = 'RETARD',
 }
 

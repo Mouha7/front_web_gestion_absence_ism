@@ -1,82 +1,154 @@
 <app-sidebar />
 
 <!-- Main Content -->
-
 <main class="ml-[230px] p-8">
+  <!-- Filtres -->
   <div class="flex items-center gap-4 mb-6 p-4 bg-gray-50 rounded-lg">
     <label for="classe-select" class="text-gray-700"
       >Filtrer par classe :</label
     >
-    <!-- <select 
-    id="classe-select" 
-    [(ngModel)]="selectedClasse"
-    class="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-  >
-    <option value="">Toutes les classes</option>
-    <option *ngFor="let classe of classeStore.classes" [value]="classe.nom">{{ classe.nom }}</option>
-  </select> -->
 
     <label for="niveau-select" class="text-gray-700">Niveau :</label>
-    <!-- <select 
-    id="niveau-select" 
-    [(ngModel)]="selectedNiveau"
-    class="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-  >
-    <option value="">Tous les niveaux</option>
-    <option *ngFor="let niveau of niveaux" [value]="niveau">{{ niveau }}</option>
-  </select> -->
-
-    <!-- <label class="text-gray-700 font-medium">Année en cours : {{ selectedAnnee }}</label> -->
   </div>
 
-  <table
-    class="min-w-full divide-y divide-gray-200 shadow-sm rounded-lg overflow-hidden"
+  <!-- Message d'erreur -->
+  <div
+    *ngIf="error && !isLoading"
+    class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 rounded-md"
   >
-    <thead class="bg-gray-100">
-      <tr>
-        <th
-          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-        >
-          Nom
-        </th>
-        <th
-          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-        >
-          Effectif
-        </th>
-        <th
-          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-        >
-          Niveau
-        </th>
-        <th
-          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-        >
-          Détails
-        </th>
-      </tr>
-    </thead>
-    <tbody class="bg-white divide-y divide-gray-200">
-      <tr *ngFor="let classe of classes" class="hover:bg-gray-50">
-        <td
-          class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
-        >
-          {{ classe.nom }}
-        </td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-          {{ classe.effectif }}
-        </td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-          {{ classe.niveau }}
-        </td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-          <a
-            class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+    <div class="flex items-center justify-between">
+      <div class="flex items-center">
+        <i class="fas fa-exclamation-circle text-red-500 mr-2"></i>
+        <p class="text-red-700 text-sm font-medium">{{ error }}</p>
+      </div>
+      <button
+        (click)="retryLoad()"
+        class="px-3 py-1 bg-red-100 text-red-700 rounded hover:bg-red-200 transition-colors text-sm font-medium"
+      >
+        Réessayer
+      </button>
+    </div>
+  </div>
+
+  <!-- Table avec skeleton loader ou données -->
+  <div class="bg-white shadow-sm rounded-lg overflow-hidden">
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-100">
+        <tr>
+          <th
+            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+          >
+            Nom
+          </th>
+          <th
+            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+          >
+            Effectif
+          </th>
+          <th
+            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+          >
+            Niveau
+          </th>
+          <th
+            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
           >
             Détails
-          </a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+          </th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <!-- Skeleton Loader -->
+        <tr
+          *ngFor="let item of skeletonItems; trackBy: trackByIndex"
+          class="animate-pulse"
+          [hidden]="!isLoading"
+        >
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="h-4 bg-gray-200 rounded w-24"></div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="h-4 bg-gray-200 rounded w-12"></div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="h-4 bg-gray-200 rounded w-20"></div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="h-8 bg-gray-200 rounded w-16"></div>
+          </td>
+        </tr>
+
+        <!-- Données réelles -->
+        <tr
+          *ngFor="let classe of classes; trackBy: trackByClasse"
+          class="hover:bg-gray-50 transition-colors duration-150"
+          [hidden]="isLoading"
+        >
+          <td
+            class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+          >
+            {{ classe.nom }}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            <span
+              class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
+            >
+              {{ classe.effectif }} étudiants
+            </span>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            <span
+              class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800"
+            >
+              {{ classe.niveau }}
+            </span>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            <a
+              href="#"
+              class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-150 text-sm font-medium"
+            >
+              <i class="fas fa-eye mr-2"></i>
+              Détails
+            </a>
+          </td>
+        </tr>
+
+        <!-- Message si aucune donnée -->
+        <tr *ngIf="!isLoading && classes.length === 0 && !error">
+          <td colspan="4" class="px-6 py-12 text-center">
+            <div
+              class="flex flex-col items-center justify-center text-gray-500"
+            >
+              <i class="fas fa-inbox text-4xl mb-4 text-gray-300"></i>
+              <p class="text-lg font-medium mb-2">Aucune classe trouvée</p>
+              <p class="text-sm">
+                Aucune classe n'est disponible pour le moment.
+              </p>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Informations supplémentaires -->
+  <div
+    *ngIf="!isLoading && classes.length > 0"
+    class="mt-6 flex items-center justify-between text-sm text-gray-500"
+  >
+    <div class="flex items-center space-x-4">
+      <span class="flex items-center">
+        <i class="fas fa-users mr-1"></i>
+        {{ classes.length }} classe(s) au total
+      </span>
+      <span class="flex items-center">
+        <i class="fas fa-user-graduate mr-1"></i>
+        {{ getTotalEffectif() }} étudiants au total
+      </span>
+    </div>
+    <div class="text-xs text-gray-400">
+      Dernière mise à jour : {{ getCurrentTime() }}
+    </div>
+  </div>
 </main>

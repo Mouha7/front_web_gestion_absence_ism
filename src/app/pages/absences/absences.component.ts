@@ -16,7 +16,8 @@ export class AbsencesComponent implements OnInit {
   private readonly absenceService: AbsenceService = inject(AbsenceService);
 
   absences: Absence[] = [];
-  showModal = false;
+
+  isLoading = true;
   selectedJustification: Justification | null = null;
 
   ngOnInit(): void {
@@ -25,11 +26,20 @@ export class AbsencesComponent implements OnInit {
   }
 
   loadAbsences(): void {
+    this.isLoading = true; // Début du chargement
     this.absenceService.getAbsence().subscribe({
       next: (data: Absence[]) => {
         this.absences = data;
+        this.isLoading = false; // Fin du chargement
       },
-      error: (err) => console.error('Error:', err),
+      error: (err) => {
+        console.error('Error:', err);
+        this.isLoading = false; // Fin du chargement même en cas d'erreur
+      },
     });
+  }
+
+  getSkeletonItems(): number[] {
+    return Array(5).fill(0); // Génère 5 lignes de skeleton
   }
 }
