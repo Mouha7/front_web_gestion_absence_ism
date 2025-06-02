@@ -2,6 +2,71 @@
 
 <!-- Main Content -->
 <main class="ml-[230px] p-8">
+  <!-- Stats Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+    <!-- Skeleton for Stats Cards -->
+    @if (isLoading) { @for (item of [1,2,3,4]; track $index) {
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <div class="flex items-center">
+        <div class="p-3 bg-gray-200 rounded-full animate-pulse">
+          <div class="w-6 h-6 bg-gray-300 rounded"></div>
+        </div>
+        <div class="ml-4 flex-1">
+          <div class="h-4 bg-gray-200 rounded animate-pulse mb-2 w-20"></div>
+          <div class="h-8 bg-gray-200 rounded animate-pulse w-16"></div>
+        </div>
+      </div>
+    </div>
+    } } @else {
+
+    <!-- Actual Stats Cards -->
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <div class="flex items-center">
+        <div class="p-3 bg-red-100 rounded-full">
+          <i class="fas fa-times text-red-600"></i>
+        </div>
+        <div class="ml-4">
+          <p class="text-sm font-medium text-gray-600">Total Absences</p>
+          <p class="text-2xl font-bold text-gray-900">247</p>
+        </div>
+      </div>
+    </div>
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <div class="flex items-center">
+        <div class="p-3 bg-yellow-100 rounded-full">
+          <i class="fas fa-clock text-yellow-600"></i>
+        </div>
+        <div class="ml-4">
+          <p class="text-sm font-medium text-gray-600">Retards</p>
+          <p class="text-2xl font-bold text-gray-900">156</p>
+        </div>
+      </div>
+    </div>
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <div class="flex items-center">
+        <div class="p-3 bg-blue-100 rounded-full">
+          <i class="fas fa-file-alt text-blue-600"></i>
+        </div>
+        <div class="ml-4">
+          <p class="text-sm font-medium text-gray-600">Justifications</p>
+          <p class="text-2xl font-bold text-gray-900">89</p>
+        </div>
+      </div>
+    </div>
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <div class="flex items-center">
+        <div class="p-3 bg-green-100 rounded-full">
+          <i class="fas fa-check text-green-600"></i>
+        </div>
+        <div class="ml-4">
+          <p class="text-sm font-medium text-gray-600">Validées</p>
+          <p class="text-2xl font-bold text-gray-900">45</p>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+
   <!-- Filters Section -->
   <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
     <h2 class="text-lg font-semibold text-gray-900 mb-4">Filtres</h2>
@@ -73,71 +138,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Stats Cards -->
-  <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-    <!-- Skeleton for Stats Cards -->
-    @if (isLoading) { @for (item of [1,2,3,4]; track $index) {
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-      <div class="flex items-center">
-        <div class="p-3 bg-gray-200 rounded-full animate-pulse">
-          <div class="w-6 h-6 bg-gray-300 rounded"></div>
-        </div>
-        <div class="ml-4 flex-1">
-          <div class="h-4 bg-gray-200 rounded animate-pulse mb-2 w-20"></div>
-          <div class="h-8 bg-gray-200 rounded animate-pulse w-16"></div>
-        </div>
-      </div>
-    </div>
-    } } @else {
-    <!-- Actual Stats Cards -->
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-      <div class="flex items-center">
-        <div class="p-3 bg-red-100 rounded-full">
-          <i class="fas fa-times text-red-600"></i>
-        </div>
-        <div class="ml-4">
-          <p class="text-sm font-medium text-gray-600">Total Absences</p>
-          <p class="text-2xl font-bold text-gray-900">247</p>
-        </div>
-      </div>
-    </div>
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-      <div class="flex items-center">
-        <div class="p-3 bg-yellow-100 rounded-full">
-          <i class="fas fa-clock text-yellow-600"></i>
-        </div>
-        <div class="ml-4">
-          <p class="text-sm font-medium text-gray-600">Retards</p>
-          <p class="text-2xl font-bold text-gray-900">156</p>
-        </div>
-      </div>
-    </div>
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-      <div class="flex items-center">
-        <div class="p-3 bg-blue-100 rounded-full">
-          <i class="fas fa-file-alt text-blue-600"></i>
-        </div>
-        <div class="ml-4">
-          <p class="text-sm font-medium text-gray-600">Justifications</p>
-          <p class="text-2xl font-bold text-gray-900">89</p>
-        </div>
-      </div>
-    </div>
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-      <div class="flex items-center">
-        <div class="p-3 bg-green-100 rounded-full">
-          <i class="fas fa-check text-green-600"></i>
-        </div>
-        <div class="ml-4">
-          <p class="text-sm font-medium text-gray-600">Validées</p>
-          <p class="text-2xl font-bold text-gray-900">45</p>
-        </div>
-      </div>
-    </div>
-    }
-  </div>
-
   <!-- Absences Table -->
   <div class="bg-white rounded-lg shadow-sm border border-gray-200">
     <div class="px-6 py-4 border-b border-gray-200">
