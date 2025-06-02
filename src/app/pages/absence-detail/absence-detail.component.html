@@ -1,1 +1,311 @@
-<p>absence-detail works!</p>
+<app-sidebar />
+
+<main class="ml-[230px] p-8">
+  <!-- Modal Overlay -->
+  <div
+    *ngIf="isVisible"
+    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+    (click)="onOverlayClick($event)"
+  >
+    <!-- Modal Content -->
+    <div
+      class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+    >
+      <!-- Header -->
+      <div
+        class="bg-gradient-to-r from-[#743E1D] to-[#c77b41] px-8 py-6 rounded-t-2xl"
+      >
+        <div class="flex justify-between items-center">
+          <div>
+            <h2 class="text-2xl font-bold text-white mb-2">
+              Détail de l'Absence
+            </h2>
+            <p class="text-orange-100 text-sm">
+              Informations complètes sur l'absence
+            </p>
+          </div>
+          <button
+            (click)="closeModal()"
+            class="text-white hover:text-orange-200 transition-colors duration-200 p-2 rounded-full hover:bg-white hover:bg-opacity-20"
+          >
+            <i class="fas fa-times text-xl"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Loading State -->
+      <div *ngIf="isLoading" class="flex justify-center items-center py-16">
+        <div
+          class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#743E1D]"
+        ></div>
+      </div>
+
+      <!-- Error State -->
+      <div *ngIf="error && !isLoading" class="p-8 text-center">
+        <div class="bg-red-50 border border-red-200 rounded-lg p-6">
+          <i class="fas fa-exclamation-triangle text-red-500 text-3xl mb-4"></i>
+          <h3 class="text-lg font-semibold text-red-800 mb-2">
+            Erreur de chargement
+          </h3>
+          <p class="text-red-600">{{ error }}</p>
+          <button
+            (click)="loadAbsenceDetail()"
+            class="mt-4 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors duration-200"
+          >
+            Réessayer
+          </button>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div *ngIf="absenceDetail && !isLoading && !error" class="p-8">
+        <!-- Student Info Card -->
+        <div
+          class="bg-gradient-to-br from-orange-50 to-yellow-50 rounded-xl p-6 mb-6 border border-orange-200"
+        >
+          <div class="flex items-center mb-4">
+            <div
+              class="w-16 h-16 bg-gradient-to-br from-[#743E1D] to-[#c77b41] rounded-full flex items-center justify-center text-white font-bold text-xl mr-4"
+            >
+              {{
+                getInitials(
+                  absenceDetail.absence.etudiantPrenom,
+                  absenceDetail.absence.etudiantNom
+                )
+              }}
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-gray-800">
+                {{ absenceDetail.absence.etudiantPrenom }}
+                {{ absenceDetail.absence.etudiantNom }}
+              </h3>
+              <p class="text-[#743E1D] font-medium">
+                {{ absenceDetail.absence.etudiantMatricule }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Absence Details Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+          <!-- Course Information -->
+          <div class="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+            <div class="flex items-center mb-4">
+              <div
+                class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3"
+              >
+                <i class="fas fa-book text-blue-600"></i>
+              </div>
+              <h4 class="text-lg font-semibold text-gray-800">
+                Informations du Cours
+              </h4>
+            </div>
+            <div class="space-y-3">
+              <div class="flex justify-between">
+                <span class="text-gray-600">Cours :</span>
+                <span class="font-medium text-gray-800">{{
+                  absenceDetail.absence.coursNom
+                }}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-600">Salle :</span>
+                <span class="font-medium text-gray-800">{{
+                  absenceDetail.absence.salleNom
+                }}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-600">Jour :</span>
+                <span class="font-medium text-gray-800">{{
+                  absenceDetail.absence.coursJour
+                }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Absence Information -->
+          <div class="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+            <div class="flex items-center mb-4">
+              <div
+                class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center mr-3"
+              >
+                <i class="fas fa-times text-red-600"></i>
+              </div>
+              <h4 class="text-lg font-semibold text-gray-800">
+                Détails de l'Absence
+              </h4>
+            </div>
+            <div class="space-y-3">
+              <div class="flex justify-between items-center">
+                <span class="text-gray-600">Type :</span>
+                <span
+                  [ngClass]="getTypeClass(absenceDetail.absence.type)"
+                  class="px-3 py-1 rounded-full text-xs font-semibold"
+                >
+                  {{ getTypeLabel(absenceDetail.absence.type) }}
+                </span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-600">Date :</span>
+                <span class="font-medium text-gray-800">{{
+                  formatDate(absenceDetail.absence.createdAt)
+                }}</span>
+              </div>
+              <div
+                class="flex justify-between"
+                *ngIf="absenceDetail.absence.heurePointage"
+              >
+                <span class="text-gray-600">Heure de pointage :</span>
+                <span class="font-medium text-gray-800">{{
+                  formatTime(absenceDetail.absence.heurePointage)
+                }}</span>
+              </div>
+              <div
+                class="flex justify-between"
+                *ngIf="
+                  absenceDetail.absence.minutesRetard &&
+                  absenceDetail.absence.minutesRetard > 0
+                "
+              >
+                <span class="text-gray-600">Retard :</span>
+                <span class="font-medium text-red-600"
+                  >{{ absenceDetail.absence.minutesRetard }} minutes</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Justification Section -->
+        <div class="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+          <div class="flex items-center mb-4">
+            <div
+              class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center mr-3"
+            >
+              <i class="fas fa-file-alt text-yellow-600"></i>
+            </div>
+            <h4 class="text-lg font-semibold text-gray-800">Justification</h4>
+          </div>
+
+          <div *ngIf="absenceDetail.justification; else noJustification">
+            <div class="mb-4">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-gray-600">Statut :</span>
+                <span
+                  [ngClass]="
+                    getJustificationStatusClass(
+                      absenceDetail.justification.statut
+                    )
+                  "
+                  class="px-3 py-1 rounded-full text-xs font-semibold"
+                >
+                  {{
+                    getJustificationStatusLabel(
+                      absenceDetail.justification.statut
+                    )
+                  }}
+                </span>
+              </div>
+              <div class="flex justify-between mb-2">
+                <span class="text-gray-600">Motif :</span>
+                <span class="font-medium text-gray-800">{{
+                  absenceDetail.justification.description
+                }}</span>
+              </div>
+              <div class="flex justify-between mb-4">
+                <span class="text-gray-600">Date de soumission :</span>
+                <span class="font-medium text-gray-800">{{
+                  formatDate(absenceDetail.justification.createdAt ?? "")
+                }}</span>
+              </div>
+            </div>
+
+            <!-- Justification Description -->
+            <div *ngIf="absenceDetail.justification.description" class="mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2"
+                >Description :</label
+              >
+              <div class="bg-gray-50 p-4 rounded-lg border">
+                <p class="text-gray-800 leading-relaxed">
+                  {{ absenceDetail.justification.description }}
+                </p>
+              </div>
+            </div>
+
+            <!-- Attached Files -->
+            <!-- <div *ngIf="absenceDetail.justification.fichierJoint" class="mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2"
+                >Fichier joint :</label
+              >
+              <div
+                class="flex items-center p-3 bg-blue-50 rounded-lg border border-blue-200"
+              >
+                <i class="fas fa-paperclip text-blue-600 mr-2"></i>
+                <a
+                  href="#"
+                  class="text-blue-600 hover:text-blue-800 font-medium"
+                >
+                  {{ absenceDetail.justification.fichierJoint }}
+                </a>
+              </div>
+            </div> -->
+
+            <!-- Validation Info -->
+            <div
+              *ngIf="absenceDetail.justification.dateValidation"
+              class="bg-green-50 p-4 rounded-lg border border-green-200"
+            >
+              <div class="flex items-center mb-2">
+                <i class="fas fa-check-circle text-green-600 mr-2"></i>
+                <span class="font-medium text-green-800"
+                  >Justification validée</span
+                >
+              </div>
+              <p class="text-sm text-green-700">
+                Validée le
+                {{ formatDate(absenceDetail.justification.dateValidation) }}
+                <span>
+                  par {{ absenceDetail.justification.prenomValidateur }}</span
+                >
+              </p>
+            </div>
+          </div>
+
+          <ng-template #noJustification>
+            <div
+              class="bg-orange-50 p-4 rounded-lg border border-orange-200 text-center"
+            >
+              <i
+                class="fas fa-exclamation-triangle text-orange-500 text-2xl mb-2"
+              ></i>
+              <p class="text-orange-800 font-medium">
+                Aucune justification fournie
+              </p>
+              <p class="text-orange-600 text-sm mt-1">
+                Cette absence n'a pas encore été justifiée
+              </p>
+            </div>
+          </ng-template>
+        </div>
+
+        <!-- Action Buttons -->
+        <div
+          class="flex justify-end space-x-4 mt-8 pt-6 border-t border-gray-200"
+        >
+          <button
+            (click)="closeModal()"
+            class="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200 font-medium"
+          >
+            Fermer
+          </button>
+          <button
+            *ngIf="!absenceDetail.justification"
+            class="px-6 py-2 bg-gradient-to-r from-[#743E1D] to-[#c77b41] text-white rounded-lg hover:from-[#8B4513] hover:to-[#D2691E] transition-all duration-200 font-medium shadow-lg"
+          >
+            <i class="fas fa-plus mr-2"></i>
+            Ajouter une justification
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

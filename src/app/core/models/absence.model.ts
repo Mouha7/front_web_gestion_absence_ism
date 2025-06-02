@@ -1,6 +1,7 @@
-import { Cours } from './cours.model';
-import { Justification } from './justification.model';
-import { Etudiant } from './utilisateur.model';
+import {
+  JustificationForDetailAbsence,
+  StatutJustification,
+} from './justification.model';
 
 export interface Absence {
   id: string;
@@ -8,16 +9,22 @@ export interface Absence {
   type: TypeAbsence;
   heurePointage?: Date;
   minutesRetard?: number;
-  cours: Cours;
-  justification?: Justification;
+  justification: StatutJustification;
   etudiantNom: string;
   etudiantPrenom: string;
   etudiantMatricule: string;
   coursNom: string;
+  salleNom: string;
+  coursJour: string;
+}
+
+export interface AbsenceDetail {
+  absence: Absence;
+  justification: JustificationForDetailAbsence;
 }
 
 export enum TypeAbsence {
-  ABSENCE = 'ABSENCE_COMPLET',
+  ABSENCE_COMPLETE = 'ABSENCE_COMPLET',
   RETARD = 'RETARD',
 }
 

@@ -25,7 +25,7 @@ export class AuthService {
 
   logout(): Observable<any> {
     return this.http.post(
-      'http://localhost:8080/api/web/auth/logout',
+      'https://ism-absences-api.onrender.com/api/web/auth/logout',
       {},
       { withCredentials: true }
     );

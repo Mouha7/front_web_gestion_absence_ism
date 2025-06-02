@@ -3,10 +3,21 @@ export interface Justification {
   description: string;
   documentPath: string;
   statut: StatutJustification;
-  dateValidation?: Date;
+  createdAt?: Date;
   coursNom: string;
   jourCours: string;
   absenceId: string;
+}
+
+export interface JustificationForDetailAbsence {
+  id: string;
+  description: string;
+  documentPath: string;
+  statut: StatutJustification;
+  createdAt?: Date;
+  dateValidation?: Date;
+  prenomValidateur: string;
+  nomValidateur: string;
 }
 
 export enum StatutJustification {
