@@ -3,5 +3,5 @@ import { Absence, AbsenceDetail } from '../models/absence.model';
 
 export interface IAbsenceService {
   getAbsence(): Observable<Absence[]>;
-  getJustificationById(id: string): Observable<AbsenceDetail>;
+  getAbsenceDetail(id: string): Observable<AbsenceDetail>;
 }

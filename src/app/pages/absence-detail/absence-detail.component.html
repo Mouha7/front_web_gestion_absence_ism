@@ -1,314 +1,533 @@
 <app-sidebar />
 
-<main class="ml-[230px] p-8">
-  <!-- Modal Overlay -->
-  <div
-    *ngIf="isVisible"
-    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
-    (click)="onOverlayClick($event)"
-  >
-    <!-- Modal Content -->
-    <div
-      class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
-    >
-      <!-- Header -->
-      <div
-        class="bg-gradient-to-r from-[#743E1D] to-[#c77b41] px-8 py-6 rounded-t-2xl"
-      >
-        <div class="flex justify-between items-center">
-          <div>
-            <h2 class="text-2xl font-bold text-white mb-2">
-              Détail de l'Absence
-            </h2>
-            <p class="text-orange-100 text-sm">
-              Informations complètes sur l'absence
-            </p>
-          </div>
-          <button
-            (click)="closeModal()"
-            class="text-white hover:text-orange-200 transition-colors duration-200 p-2 rounded-full hover:bg-white hover:bg-opacity-20"
-          >
-            <i class="fas fa-times text-xl"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- Loading State -->
-      <div *ngIf="isLoading" class="flex justify-center items-center py-16">
-        <div
-          class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#743E1D]"
-        ></div>
-      </div>
-
-      <!-- Error State -->
-      <div *ngIf="error && !isLoading" class="p-8 text-center">
-        <div class="bg-red-50 border border-red-200 rounded-lg p-6">
-          <i class="fas fa-exclamation-triangle text-red-500 text-3xl mb-4"></i>
-          <h3 class="text-lg font-semibold text-red-800 mb-2">
-            Erreur de chargement
-          </h3>
-          <p class="text-red-600">{{ error }}</p>
-          <button
-            (click)="loadAbsenceDetail()"
-            class="mt-4 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors duration-200"
-          >
-            Réessayer
-          </button>
-        </div>
-      </div>
-
-      <!-- Main Content -->
-      <div *ngIf="absenceDetail && !isLoading && !error" class="p-8">
-        <!-- Student Info Card -->
-        <div
-          class="bg-gradient-to-br from-orange-50 to-yellow-50 rounded-xl p-6 mb-6 border border-orange-200"
+<!-- Main Content -->
+<main class="ml-[230px] p-8 min-h-screen">
+  <!-- Header Section -->
+  <div class="mb-8 animate-fade-in">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center space-x-4">
+        <button
+          class="p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+          onclick="history.back()"
         >
-          <div class="flex items-center mb-4">
+          <i class="fas fa-arrow-left text-gray-600"></i>
+        </button>
+        <div>
+          <h1 class="text-3xl font-bold text-gray-900">Détail de l'Absence</h1>
+          <p class="text-gray-600 mt-1">
+            Informations complètes sur l'absence sélectionnée
+          </p>
+        </div>
+      </div>
+      <div class="flex space-x-3">
+        <button
+          class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 flex items-center"
+        >
+          <i class="fas fa-print mr-2"></i>
+          Imprimer
+        </button>
+        <button
+          class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors duration-200 flex items-center"
+        >
+          <i class="fas fa-download mr-2"></i>
+          Exporter
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Grid -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Left Column - Main Information -->
+    <div class="lg:col-span-2 space-y-6">
+      <!-- Student Information Card -->
+      <div
+        class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden animate-fade-in"
+      >
+        <div class="card-gradient p-6 text-white">
+          <div class="flex items-center space-x-4">
             <div
-              class="w-16 h-16 bg-gradient-to-br from-[#743E1D] to-[#c77b41] rounded-full flex items-center justify-center text-white font-bold text-xl mr-4"
+              class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm"
             >
-              {{
-                getInitials(
-                  absenceDetail.absence.etudiantPrenom,
-                  absenceDetail.absence.etudiantNom
-                )
-              }}
+              <span class="text-2xl font-bold">
+                {{ absenceDetail?.absence?.etudiantPrenom?.[0]}}
+
+                {{ absenceDetail?.absence?.etudiantNom?.[0] }}
+              </span>
             </div>
             <div>
-              <h3 class="text-xl font-bold text-gray-800">
-                {{ absenceDetail.absence.etudiantPrenom }}
-                {{ absenceDetail.absence.etudiantNom }}
-              </h3>
-              <p class="text-[#743E1D] font-medium">
-                {{ absenceDetail.absence.etudiantMatricule }}
+              <h2 class="text-2xl font-bold">
+                {{ absenceDetail?.absence?.etudiantPrenom }}
+                {{ absenceDetail?.absence?.etudiantNom }}
+              </h2>
+              <p class="text-white/80 text-lg">
+                {{ absenceDetail?.absence?.etudiantMatricule }}
               </p>
             </div>
           </div>
         </div>
-
-        <!-- Absence Details Grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-          <!-- Course Information -->
-          <div class="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
-            <div class="flex items-center mb-4">
-              <div
-                class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3"
-              >
-                <i class="fas fa-book text-blue-600"></i>
-              </div>
-              <h4 class="text-lg font-semibold text-gray-800">
-                Informations du Cours
-              </h4>
-            </div>
-            <div class="space-y-3">
-              <div class="flex justify-between">
-                <span class="text-gray-600">Cours :</span>
-                <span class="font-medium text-gray-800">{{
-                  absenceDetail.absence.coursNom
-                }}</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-600">Salle :</span>
-                <span class="font-medium text-gray-800">{{
-                  absenceDetail.absence.salleNom
-                }}</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-600">Jour :</span>
-                <span class="font-medium text-gray-800">{{
-                  absenceDetail.absence.coursJour
-                }}</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Absence Information -->
-          <div class="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
-            <div class="flex items-center mb-4">
-              <div
-                class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center mr-3"
-              >
-                <i class="fas fa-times text-red-600"></i>
-              </div>
-              <h4 class="text-lg font-semibold text-gray-800">
-                Détails de l'Absence
-              </h4>
-            </div>
-            <div class="space-y-3">
-              <div class="flex justify-between items-center">
-                <span class="text-gray-600">Type :</span>
-                <span
-                  [ngClass]="getTypeClass(absenceDetail.absence.type)"
-                  class="px-3 py-1 rounded-full text-xs font-semibold"
+        <div class="p-6">
+          <div class="grid grid-cols-2 gap-6">
+            <div class="space-y-4">
+              <div class="flex items-center space-x-3">
+                <div
+                  class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center"
                 >
-                  {{ getTypeLabel(absenceDetail.absence.type) }}
-                </span>
+                  <i class="fas fa-book text-blue-600">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="lucide lucide-book-open-icon lucide-book-open"
+                    >
+                      <path d="M12 7v14" />
+                      <path
+                        d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"
+                      />
+                    </svg>
+                  </i>
+                </div>
+                <div>
+                  <p class="text-sm font-medium text-gray-500">Cours</p>
+                  <p class="text-lg font-semibold text-gray-900">
+                    {{ absenceDetail?.absence?.coursNom }}
+                  </p>
+                </div>
               </div>
-              <div class="flex justify-between">
-                <span class="text-gray-600">Date :</span>
-                <span class="font-medium text-gray-800">{{
-                  formatDate(absenceDetail.absence.createdAt)
-                }}</span>
-              </div>
-              <div
-                class="flex justify-between"
-                *ngIf="absenceDetail.absence.heurePointage"
-              >
-                <span class="text-gray-600">Heure de pointage :</span>
-                <span class="font-medium text-gray-800">{{
-                  formatTime(absenceDetail.absence.heurePointage)
-                }}</span>
-              </div>
-              <div
-                class="flex justify-between"
-                *ngIf="
-                  absenceDetail.absence.minutesRetard &&
-                  absenceDetail.absence.minutesRetard > 0
-                "
-              >
-                <span class="text-gray-600">Retard :</span>
-                <span class="font-medium text-red-600"
-                  >{{ absenceDetail.absence.minutesRetard }} minutes</span
+              <div class="flex items-center space-x-3">
+                <div
+                  class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center"
                 >
+                  <i class="fas fa-door-open text-green-600">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="lucide lucide-house-icon lucide-house"
+                    >
+                      <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
+                      <path
+                        d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"
+                      />
+                    </svg>
+                  </i>
+                </div>
+                <div>
+                  <p class="text-sm font-medium text-gray-500">Salle</p>
+                  <p class="text-lg font-semibold text-gray-900">
+                    {{ absenceDetail?.absence?.salleNom }}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="space-y-4">
+              <div class="flex items-center space-x-3">
+                <div
+                  class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center"
+                >
+                  <i class="fas fa-calendar text-purple-600">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="lucide lucide-calendar-icon lucide-calendar"
+                    >
+                      <path d="M8 2v4" />
+                      <path d="M16 2v4" />
+                      <rect width="18" height="18" x="3" y="4" rx="2" />
+                      <path d="M3 10h18" />
+                    </svg>
+                  </i>
+                </div>
+                <div>
+                  <p class="text-sm font-medium text-gray-500">Date</p>
+                  <p class="text-lg font-semibold text-gray-900">
+                    {{ absenceDetail?.absence?.createdAt | date : "d MMMM y" }}
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-center space-x-3">
+                <div
+                  class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center"
+                >
+                  <i class="fas fa-clock text-orange-600">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="lucide lucide-calendar1-icon lucide-calendar-1"
+                    >
+                      <path d="M11 14h1v4" />
+                      <path d="M16 2v4" />
+                      <path d="M3 10h18" />
+                      <path d="M8 2v4" />
+                      <rect x="3" y="4" width="18" height="18" rx="2" />
+                    </svg>
+                  </i>
+                </div>
+                <div>
+                  <p class="text-sm font-medium text-gray-500">Jour</p>
+                  <p class="text-lg font-semibold text-gray-900">
+                    {{ absenceDetail?.absence?.coursJour }}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Justification Section -->
-        <div class="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
-          <div class="flex items-center mb-4">
-            <div
-              class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center mr-3"
-            >
-              <i class="fas fa-file-alt text-yellow-600"></i>
-            </div>
-            <h4 class="text-lg font-semibold text-gray-800">Justification</h4>
-          </div>
-
-          <div *ngIf="absenceDetail.justification; else noJustification">
-            <div class="mb-4">
-              <div class="flex justify-between items-center mb-2">
-                <span class="text-gray-600">Statut :</span>
-                <span
-                  [ngClass]="
-                    getJustificationStatusClass(
-                      absenceDetail.justification.statut
-                    )
-                  "
-                  class="px-3 py-1 rounded-full text-xs font-semibold"
-                >
-                  {{
-                    getJustificationStatusLabel(
-                      absenceDetail.justification.statut
-                    )
-                  }}
-                </span>
-              </div>
-              <div class="flex justify-between mb-2">
-                <span class="text-gray-600">Motif :</span>
-                <span class="font-medium text-gray-800">{{
-                  absenceDetail.justification.description
-                }}</span>
-              </div>
-              <div class="flex justify-between mb-4">
-                <span class="text-gray-600">Date de soumission :</span>
-                <span class="font-medium text-gray-800">{{
-                  formatDate(absenceDetail.justification.createdAt ?? "")
-                }}</span>
-              </div>
-            </div>
-
-            <!-- Justification Description -->
-            <div *ngIf="absenceDetail.justification.description" class="mb-4">
-              <label
-                for="justification-description"
-                class="block text-sm font-medium text-gray-700 mb-2"
-                >Description :</label
-              >
-              <div
-                id="justification-description"
-                class="bg-gray-50 p-4 rounded-lg border"
-              >
-                <p class="text-gray-800 leading-relaxed">
-                  {{ absenceDetail.justification.description }}
-                </p>
-              </div>
-            </div>
-
-            <!-- Attached Files -->
-            <!-- <div *ngIf="absenceDetail.justification.fichierJoint" class="mb-4">
-              <label class="block text-sm font-medium text-gray-700 mb-2"
-                >Fichier joint :</label
-              >
-              <div
-                class="flex items-center p-3 bg-blue-50 rounded-lg border border-blue-200"
-              >
-                <i class="fas fa-paperclip text-blue-600 mr-2"></i>
-                <a
-                  href="#"
-                  class="text-blue-600 hover:text-blue-800 font-medium"
-                >
-                  {{ absenceDetail.justification.fichierJoint }}
-                </a>
-              </div>
-            </div> -->
-
-            <!-- Validation Info -->
-            <div
-              *ngIf="absenceDetail.justification.dateValidation"
-              class="bg-green-50 p-4 rounded-lg border border-green-200"
-            >
-              <div class="flex items-center mb-2">
-                <i class="fas fa-check-circle text-green-600 mr-2"></i>
-                <span class="font-medium text-green-800"
-                  >Justification validée</span
-                >
-              </div>
-              <p class="text-sm text-green-700">
-                Validée le
-                {{ formatDate(absenceDetail.justification.dateValidation) }}
-                <span>
-                  par {{ absenceDetail.justification.prenomValidateur }}</span
-                >
-              </p>
-            </div>
-          </div>
-
-          <ng-template #noJustification>
-            <div
-              class="bg-orange-50 p-4 rounded-lg border border-orange-200 text-center"
-            >
-              <i
-                class="fas fa-exclamation-triangle text-orange-500 text-2xl mb-2"
-              ></i>
-              <p class="text-orange-800 font-medium">
-                Aucune justification fournie
-              </p>
-              <p class="text-orange-600 text-sm mt-1">
-                Cette absence n'a pas encore été justifiée
-              </p>
-            </div>
-          </ng-template>
-        </div>
-
-        <!-- Action Buttons -->
-        <div
-          class="flex justify-end space-x-4 mt-8 pt-6 border-t border-gray-200"
-        >
-          <button
-            (click)="closeModal()"
-            class="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200 font-medium"
+      <!-- Absence Details Card -->
+      <div
+        class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 animate-fade-in"
+      >
+        <h3 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+          <i class="fas fa-info-circle text-blue-600 mr-3"></i>
+          Détails de l'Absence
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div
+            class="text-center p-4 bg-gradient-to-br from-red-50 to-red-100 rounded-xl"
           >
-            Fermer
+            <div
+              class="w-12 h-12 bg-red-200 rounded-full flex items-center justify-center mx-auto mb-3"
+            >
+              <i class="fas fa-user-times text-red-600">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-map-pin-icon lucide-map-pin"
+                >
+                  <path
+                    d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"
+                  />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+              </i>
+            </div>
+            <p class="text-sm font-medium text-gray-600">Type d'absence</p>
+            <span
+              class="inline-flex px-3 py-1 mt-2 text-sm font-semibold rounded-full"
+              [ngClass]="{
+                'bg-orange-100 text-orange-800':
+                  absenceDetail?.absence?.type === 'RETARD',
+                'bg-red-100 text-red-800':
+                  absenceDetail?.absence?.type === 'ABSENCE_COMPLETE'
+              }"
+            >
+              {{ absenceDetail?.absence?.type }}
+            </span>
+          </div>
+
+          <div
+            class="text-center p-4 bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-xl"
+            *ngIf="absenceDetail?.absence?.type === 'RETARD'"
+          >
+            <div
+              class="w-12 h-12 bg-yellow-200 rounded-full flex items-center justify-center mx-auto mb-3"
+            >
+              <i class="fas fa-stopwatch text-yellow-600">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-clock-alert-icon lucide-clock-alert"
+                >
+                  <path d="M12 6v6l4 2" />
+                  <path d="M16 21.16a10 10 0 1 1 5-13.516" />
+                  <path d="M20 11.5v6" />
+                  <path d="M20 21.5h.01" />
+                </svg>
+              </i>
+            </div>
+            <p class="text-sm font-medium text-gray-600">Durée du retard</p>
+            <p class="text-2xl font-bold text-yellow-800 mt-2">
+              {{ absenceDetail?.absence?.minutesRetard || 0 }} min
+            </p>
+          </div>
+
+          <div
+            class="text-center p-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl"
+            *ngIf="absenceDetail?.absence?.heurePointage"
+          >
+            <div
+              class="w-12 h-12 bg-blue-200 rounded-full flex items-center justify-center mx-auto mb-3"
+            >
+              <i class="fas fa-clock text-blue-600">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-clock4-icon lucide-clock-4"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+                </svg>
+              </i>
+            </div>
+            <p class="text-sm font-medium text-gray-600">Heure de pointage</p>
+            <p class="text-lg font-bold text-blue-800 mt-2">
+              {{ absenceDetail?.absence?.heurePointage | date : "shortTime" }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Justification Details -->
+      <div
+        class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 animate-fade-in"
+        *ngIf="absenceDetail?.justification"
+      >
+        <h3 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+          <i class="fas fa-file-alt text-green-600 mr-3"></i>
+          Justification
+        </h3>
+        <div class="space-y-4">
+          <div class="bg-gray-50 rounded-xl p-4">
+            <h4 class="font-semibold text-gray-900 mb-2">Description</h4>
+            <p class="text-gray-700">
+              {{ absenceDetail?.justification?.description }}
+            </p>
+          </div>
+
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 gap-4"
+            *ngIf="absenceDetail?.justification?.createdAt"
+          >
+            <div class="bg-blue-50 rounded-xl p-4">
+              <h4 class="font-semibold text-blue-900 mb-2">
+                Date de soumission
+              </h4>
+              <p class="text-blue-700">
+                {{
+                  absenceDetail?.justification?.createdAt | date : "d MMMM y"
+                }}
+              </p>
+            </div>
+            <div
+              class="bg-green-50 rounded-xl p-4"
+              *ngIf="absenceDetail?.justification?.dateValidation"
+            >
+              <h4 class="font-semibold text-green-900 mb-2">
+                Date de validation
+              </h4>
+              <p class="text-green-700">
+                {{
+                  absenceDetail?.justification?.dateValidation
+                    | date : "d MMMM y"
+                }}
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="bg-purple-50 rounded-xl p-4"
+            *ngIf="absenceDetail?.justification?.dateValidation"
+          >
+            <h4 class="font-semibold text-purple-900 mb-2">Validé par</h4>
+            <p class="text-purple-700">
+              {{ absenceDetail?.justification?.prenomValidateur }}
+              {{ absenceDetail?.justification?.nomValidateur }}
+            </p>
+          </div>
+
+          <div
+            class="flex items-center justify-center p-4"
+            *ngIf="absenceDetail?.justification?.documentPath"
+          >
+            <button
+              (click)="downloadDocument()"
+              class="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors duration-200 flex items-center"
+            >
+              <i class="fas fa-download mr-2"></i>
+              Télécharger le document justificatif
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column - Status and Actions -->
+    <div class="space-y-6">
+      <!-- Status Card -->
+      <div
+        class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden animate-fade-in"
+      >
+        <div class="status-gradient p-6 text-white text-center">
+          <div
+            class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-sm"
+          >
+            <i class="fas fa-clipboard-check text-2xl">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-mail-question-icon lucide-mail-question"
+              >
+                <path
+                  d="M22 10.5V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12.5"
+                />
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                <path
+                  d="M18 15.28c.2-.4.5-.8.9-1a2.1 2.1 0 0 1 2.6.4c.3.4.5.8.5 1.3 0 1.3-2 2-2 2"
+                />
+                <path d="M20 22v.01" />
+              </svg>
+            </i>
+          </div>
+          <h3 class="text-xl font-bold mb-2">Statut de Justification</h3>
+          <span
+            class="inline-flex px-4 py-2 text-sm font-semibold rounded-full bg-white/20 backdrop-blur-sm"
+            [ngClass]="{
+              'text-yellow-100':
+                absenceDetail?.justification?.statut === 'EN_ATTENTE',
+              'text-green-100':
+                absenceDetail?.justification?.statut === 'VALIDEE',
+              'text-red-100': absenceDetail?.justification?.statut === 'REJETEE'
+            }"
+          >
+            {{ absenceDetail?.justification?.statut || "NON_JUSTIFIEE" }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Summary Stats -->
+      <div
+        class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 animate-fade-in"
+      >
+        <h3 class="text-lg font-bold text-gray-900 mb-4">
+          Résumé de l'Étudiant
+        </h3>
+        <div class="space-y-4">
+          <div
+            class="flex items-center justify-between p-3 bg-red-50 rounded-lg"
+          >
+            <span class="text-sm font-medium text-red-800"
+              >Absences totales</span
+            >
+            <span class="text-lg font-bold text-red-900">12</span>
+          </div>
+          <div
+            class="flex items-center justify-between p-3 bg-yellow-50 rounded-lg"
+          >
+            <span class="text-sm font-medium text-yellow-800">Retards</span>
+            <span class="text-lg font-bold text-yellow-900">8</span>
+          </div>
+          <div
+            class="flex items-center justify-between p-3 bg-green-50 rounded-lg"
+          >
+            <span class="text-sm font-medium text-green-800"
+              >Justifications validées</span
+            >
+            <span class="text-lg font-bold text-green-900">5</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div
+        class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 animate-fade-in"
+      >
+        <h3 class="text-lg font-bold text-gray-900 mb-4">Actions Rapides</h3>
+        <div class="space-y-3">
+          <button
+            class="w-full px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200 flex items-center justify-center"
+            *ngIf="absenceDetail?.justification?.statut === 'EN_ATTENTE'"
+          >
+            <i class="fas fa-check mr-2"></i>
+            Valider la justification
           </button>
           <button
-            *ngIf="!absenceDetail.justification"
-            class="px-6 py-2 bg-gradient-to-r from-[#743E1D] to-[#c77b41] text-white rounded-lg hover:from-[#8B4513] hover:to-[#D2691E] transition-all duration-200 font-medium shadow-lg"
+            class="w-full px-4 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-200 flex items-center justify-center"
+            *ngIf="absenceDetail?.justification?.statut === 'EN_ATTENTE'"
           >
-            <i class="fas fa-plus mr-2"></i>
-            Ajouter une justification
+            <i class="fas fa-times mr-2"></i>
+            Rejeter la justification
           </button>
+          <!-- <button
+            class="w-full px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 flex items-center justify-center"
+          >
+            <i class="fas fa-envelope mr-2"></i>
+            Contacter l'étudiant
+          </button> -->
+          <button
+            class="w-full px-4 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors duration-200 flex items-center justify-center"
+          >
+            <i class="fas fa-history mr-2"></i>
+            Voir l'historique
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading Skeleton -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8" *ngIf="isLoading">
+    <div class="lg:col-span-2 space-y-6">
+      <div class="bg-white rounded-2xl shadow-lg p-6">
+        <div class="animate-pulse space-y-4">
+          <div class="h-8 bg-gray-200 rounded w-1/3"></div>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="h-20 bg-gray-200 rounded"></div>
+            <div class="h-20 bg-gray-200 rounded"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="space-y-6">
+      <div class="bg-white rounded-2xl shadow-lg p-6">
+        <div class="animate-pulse space-y-4">
+          <div class="h-6 bg-gray-200 rounded w-1/2"></div>
+          <div class="h-20 bg-gray-200 rounded"></div>
         </div>
       </div>
     </div>

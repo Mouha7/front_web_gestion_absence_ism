@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
-import { AbsenceDetail, TypeAbsence } from '../../core/models/absence.model';
+import { AbsenceDetail } from '../../core/models/absence.model';
 import { AbsenceService } from '../../core/services/impl/absence.service';
-import { StatutJustification } from '../../core/models/justification.model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-absence-detail',
@@ -11,127 +11,109 @@ import { StatutJustification } from '../../core/models/justification.model';
   templateUrl: './absence-detail.component.html',
   styleUrl: './absence-detail.component.css',
 })
-export class AbsenceDetailComponent {
-  @Input() absenceId: string = '';
-  @Input() isVisible: boolean = false;
+export class AbsenceDetailComponent implements OnInit {
+  private readonly absenceService: AbsenceService = inject(AbsenceService);
+  private readonly route: ActivatedRoute = inject(ActivatedRoute);
+  private readonly router: Router = inject(Router);
 
   absenceDetail: AbsenceDetail | null = null;
-  isLoading: boolean = false;
+  isLoading = true;
   error: string | null = null;
 
-  constructor(private readonly absenceService: AbsenceService) {}
-
-  ngOnInit() {
-    if (this.absenceId && this.isVisible) {
-      this.loadAbsenceDetail();
-    }
+  ngOnInit(): void {
+    this.loadAbsenceDetail();
   }
 
-  ngOnChanges() {
-    if (this.absenceId && this.isVisible && !this.absenceDetail) {
-      this.loadAbsenceDetail();
-    }
-  }
+  private loadAbsenceDetail(): void {
+    const id = this.route.snapshot.paramMap.get('id');
 
-  loadAbsenceDetail() {
+    if (!id) {
+      this.error = "ID d'absence non fourni";
+      this.isLoading = false;
+      return;
+    }
+
     this.isLoading = true;
-    this.error = null;
-
-    this.absenceService.getJustificationById(this.absenceId).subscribe({
-      next: (data) => {
-        // Simuler la structure AbsenceDetail car l'API retourne seulement Justification
-        // Vous devrez adapter selon votre API réelle
-        this.absenceDetail = data as any;
+    this.absenceService.getAbsenceDetail(id).subscribe({
+      next: (data: AbsenceDetail) => {
+        this.absenceDetail = data;
         this.isLoading = false;
+        console.log('Absence detail loaded:', data);
       },
       error: (err) => {
-        this.error = "Impossible de charger les détails de l'absence";
+        console.error('Error loading absence detail:', err);
+        this.error = "Erreur lors du chargement des détails de l'absence";
         this.isLoading = false;
-        console.error('Erreur lors du chargement:', err);
       },
     });
   }
 
-  closeModal() {
-    this.isVisible = false;
-    this.absenceDetail = null;
-    this.error = null;
-  }
-
-  onOverlayClick(event: Event) {
-    if (event.target === event.currentTarget) {
-      this.closeModal();
+  validateJustification(): void {
+    if (this.absenceDetail?.justification?.id) {
+      // Logique pour valider la justification
+      console.log(
+        'Validating justification:',
+        this.absenceDetail.justification.id
+      );
+      // Vous pouvez ajouter un service pour gérer la validation
     }
   }
 
-  getInitials(prenom: string, nom: string): string {
-    return `${prenom?.charAt(0) || ''}${nom?.charAt(0) || ''}`.toUpperCase();
-  }
-
-  getTypeClass(type: TypeAbsence): string {
-    switch (type) {
-      case TypeAbsence.RETARD:
-        return 'bg-yellow-100 text-yellow-800';
-      case TypeAbsence.ABSENCE_COMPLETE:
-        return 'bg-red-100 text-red-800';
-      default:
-        return 'bg-gray-100 text-gray-800';
+  rejectJustification(): void {
+    if (this.absenceDetail?.justification?.id) {
+      // Logique pour rejeter la justification
+      console.log(
+        'Rejecting justification:',
+        this.absenceDetail.justification.id
+      );
+      // Vous pouvez ajouter un service pour gérer le rejet
     }
   }
 
-  getTypeLabel(type: TypeAbsence): string {
-    switch (type) {
-      case TypeAbsence.RETARD:
-        return 'Retard';
-      case TypeAbsence.ABSENCE_COMPLETE:
-        return 'Absence complète';
-      default:
-        return 'Non défini';
+  contactStudent(): void {
+    if (this.absenceDetail?.absence) {
+      // Logique pour contacter l'étudiant
+      console.log(
+        'Contacting student:',
+        this.absenceDetail.absence.etudiantMatricule
+      );
+      // Vous pouvez implémenter l'envoi d'email ou redirection vers un système de messagerie
     }
   }
 
-  getJustificationStatusClass(statut: StatutJustification): string {
-    switch (statut) {
-      case StatutJustification.VALIDEE:
-        return 'bg-green-100 text-green-800';
-      case StatutJustification.EN_ATTENTE:
-        return 'bg-yellow-100 text-yellow-800';
-      case StatutJustification.REJETEE:
-        return 'bg-red-100 text-red-800';
-      default:
-        return 'bg-gray-100 text-gray-800';
+  viewHistory(): void {
+    if (this.absenceDetail?.absence) {
+      // Logique pour voir l'historique de l'étudiant
+      console.log(
+        'Viewing history for student:',
+        this.absenceDetail.absence.etudiantMatricule
+      );
+      // Vous pouvez naviguer vers une page d'historique des absences
     }
   }
 
-  getJustificationStatusLabel(statut: StatutJustification): string {
-    switch (statut) {
-      case StatutJustification.VALIDEE:
-        return 'Validée';
-      case StatutJustification.EN_ATTENTE:
-        return 'En attente';
-      case StatutJustification.REJETEE:
-        return 'Rejetée';
-      default:
-        return 'Non défini';
+  downloadDocument(): void {
+    if (this.absenceDetail?.justification?.documentPath) {
+      // Logique pour télécharger le document justificatif
+      console.log(
+        'Downloading document:',
+        this.absenceDetail.justification.documentPath
+      );
+      // Vous pouvez implémenter le téléchargement du document
+      window.open(this.absenceDetail.justification.documentPath, '_blank');
     }
   }
 
-  formatDate(date: Date | string): string {
-    if (!date) return '';
-    const d = new Date(date);
-    return d.toLocaleDateString('fr-FR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-    });
+  printDetail(): void {
+    window.print();
   }
 
-  formatTime(date: Date | string): string {
-    if (!date) return '';
-    const d = new Date(date);
-    return d.toLocaleTimeString('fr-FR', {
-      hour: '2-digit',
-      minute: '2-digit',
-    });
+  exportDetail(): void {
+    // Logique pour exporter les détails (PDF, Excel, etc.)
+    console.log('Exporting absence detail');
+  }
+
+  goBack(): void {
+    this.router.navigate(['/absences']);
   }
 }

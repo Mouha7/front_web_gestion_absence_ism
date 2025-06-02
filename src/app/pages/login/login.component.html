@@ -7,17 +7,13 @@
       <div class="flex flex-col lg:flex-row">
         <!-- Left Side - Image Section -->
         <div
-          class="lg:w-1/2 bg-[#c77b41] p-8 flex flex-col justify-center items-center text-white"
+          class="lg:w-1/2 bg-[#3C1F0D] p-8 flex flex-col justify-center items-center text-white"
         >
           <div class="text-center mb-8">
             <div
-              class="w-32 h-32 mx-auto mb-6 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm"
+              class="w-64 h-64 mx-auto mb-6 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm"
             >
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/b/b5/LOGO-ISM-SENEGAL-WIKI.jpg"
-                alt=""
-                srcset=""
-              />
+              <img src="logo-ISM.jpeg" alt="" srcset="" />
             </div>
             <h1 class="text-4xl font-bold mb-4">Système de Gestion</h1>
             <h2 class="text-2xl font-semibold mb-4">des Absences</h2>
@@ -49,11 +45,15 @@
 
             <form class="space-y-6" (ngSubmit)="onSubmit()" #loginForm="ngForm">
               <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                <label
+                  for="emailInput"
+                  class="block text-sm font-semibold text-gray-700 mb-2"
+                >
                   <i class="fas fa-envelope text-orange-primary mr-2"></i>
                   Adresse email
                 </label>
                 <input
+                  id="emailInput"
                   type="email"
                   [(ngModel)]="email"
                   name="email"
@@ -66,12 +66,16 @@
               </div>
 
               <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                <label
+                  for="passwordInput"
+                  class="block text-sm font-semibold text-gray-700 mb-2"
+                >
                   <i class="fas fa-lock text-orange-primary mr-2"></i>
                   Mot de passe
                 </label>
                 <div class="relative">
                   <input
+                    id="passwordInput"
                     type="password"
                     [(ngModel)]="motDePasse"
                     name="password"

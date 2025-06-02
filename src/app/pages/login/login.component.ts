@@ -16,7 +16,10 @@ export class LoginComponent {
   error = '';
   isLoading = false;
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(
+    private readonly auth: AuthService,
+    private readonly router: Router
+  ) {}
 
   onSubmit() {
     this.error = '';

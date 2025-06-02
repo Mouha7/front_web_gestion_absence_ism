@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { Absence, AbsenceDetail } from '../../models/absence.model';
 import { IAbsenceService } from '../IAbsenceService';
 
@@ -18,7 +18,12 @@ export class AbsenceService implements IAbsenceService {
   }
 
   // Récupérer une absence par ID
-  getJustificationById(id: string): Observable<AbsenceDetail> {
-    return this.http.get<AbsenceDetail>(`${this.apiUrl}/${id}`);
+  getAbsenceDetail(id: string): Observable<AbsenceDetail> {
+    return this.http.get<AbsenceDetail>(`${this.apiUrl}/${id}`).pipe(
+      catchError((error) => {
+        console.error('Error fetching absence detail:', error);
+        return throwError(() => error);
+      })
+    );
   }
 }
