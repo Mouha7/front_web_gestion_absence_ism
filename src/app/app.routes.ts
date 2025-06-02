@@ -16,7 +16,7 @@ export const routes: Routes = [
       { path: 'absences', component: AbsencesComponent },
       { path: 'absences/:id', component: AbsenceDetailComponent },
       { path: 'classes', component: ClasseComponent },
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'logout', redirectTo: 'login' },
     ],
   },
   { path: '**', redirectTo: 'login' },
