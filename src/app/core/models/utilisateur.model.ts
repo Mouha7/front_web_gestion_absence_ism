@@ -52,6 +52,9 @@ export interface LoginResponse {
   userId: string;
   role: Role;
   redirectEndpoint: string;
+  token: string;
+  type: string;
+  realId: string;
 }
 
 export interface UserProfile {
