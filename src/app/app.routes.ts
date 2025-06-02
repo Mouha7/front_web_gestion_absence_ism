@@ -8,6 +8,7 @@ import { AbsenceDetailComponent } from './pages/absence-detail/absence-detail.co
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
+  { path: '', component: LoginComponent },
   {
     path: '',
     canActivate: [authGuard],
