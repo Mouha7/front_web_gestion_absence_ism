@@ -19,8 +19,6 @@ export class AbsenceService implements IAbsenceService {
 
   // Récupérer une absence par ID
   getJustificationById(id: string): Observable<AbsenceDetail> {
-    return this.http.get<AbsenceDetail>(
-      `http://localhost:8080/api/web/absences/${id}`
-    );
+    return this.http.get<AbsenceDetail>(`${this.apiUrl}/${id}`);
   }
 }
