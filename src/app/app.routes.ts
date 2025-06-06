@@ -5,6 +5,7 @@ import { AbsencesComponent } from './pages/absences/absences.component';
 import { ClasseComponent } from './pages/classe/classe.component';
 import { AbsenceDetailComponent } from './pages/absence-detail/absence-detail.component';
 import { VigilesComponent } from './pages/vigiles/vigiles.component';
+import { EtudiantsComponent } from './pages/etudiants/etudiants.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -17,6 +18,7 @@ export const routes: Routes = [
       { path: 'absences/:id', component: AbsenceDetailComponent },
       { path: 'classes', component: ClasseComponent },
       { path: 'vigiles', component: VigilesComponent },
+      { path: 'etudiants', component: EtudiantsComponent },
       { path: 'logout', redirectTo: 'login' },
     ],
   },

@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { AbsenceService } from '../../core/services/impl/absence.service';
-import { Absence } from '../../core/models/absence.model';
+import { Absence, TypeAbsence } from '../../core/models/absence.model';
 import { CommonModule } from '@angular/common';
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { Router } from '@angular/router';
@@ -17,7 +17,7 @@ export class AbsencesComponent implements OnInit {
   private readonly router: Router = inject(Router);
 
   absences: Absence[] = [];
-
+  public TypeAbsence = TypeAbsence;
   isLoading = true;
 
   ngOnInit(): void {
