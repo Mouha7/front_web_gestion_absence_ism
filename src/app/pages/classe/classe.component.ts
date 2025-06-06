@@ -29,7 +29,7 @@ export class ClasseComponent {
     this.isLoading = true;
     this.error = '';
 
-    this.classeService.getAbsence().subscribe({
+    this.classeService.getAllClasses().subscribe({
       next: (data: Classe[]) => {
         this.classes = data;
         this.isLoading = false;
@@ -42,32 +42,7 @@ export class ClasseComponent {
     });
   }
 
-  retryLoad(): void {
-    this.loadClasse();
-  }
-
-  // Fonction pour tracker les éléments dans ngFor (optimisation des performances)
-  trackByIndex(index: number): number {
-    return index;
-  }
-
-  trackByClasse(index: number, classe: Classe): any {
-    return classe.id || classe.nom || index;
-  }
-
-  // Calcule l'effectif total
-  getTotalEffectif(): number {
-    return this.classes.reduce(
-      (total, classe) => total + (classe.effectif || 0),
-      0
-    );
-  }
-
-  // Retourne l'heure actuelle formatée
-  getCurrentTime(): string {
-    return new Date().toLocaleTimeString('fr-FR', {
-      hour: '2-digit',
-      minute: '2-digit',
-    });
+  getSkeletonItems(): number[] {
+    return Array(5).fill(0);
   }
 }

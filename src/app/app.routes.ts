@@ -4,6 +4,7 @@ import { authGuard } from './guards/auth.guard';
 import { AbsencesComponent } from './pages/absences/absences.component';
 import { ClasseComponent } from './pages/classe/classe.component';
 import { AbsenceDetailComponent } from './pages/absence-detail/absence-detail.component';
+import { VigilesComponent } from './pages/vigiles/vigiles.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -15,6 +16,7 @@ export const routes: Routes = [
       { path: 'absences', component: AbsencesComponent },
       { path: 'absences/:id', component: AbsenceDetailComponent },
       { path: 'classes', component: ClasseComponent },
+      { path: 'vigiles', component: VigilesComponent },
       { path: 'logout', redirectTo: 'login' },
     ],
   },

@@ -4,6 +4,12 @@ import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { AbsenceDetail } from '../../core/models/absence.model';
 import { AbsenceService } from '../../core/services/impl/absence.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../../core/services/impl/auth.service';
+import {
+  JustificationTraitementRequest,
+  StatutJustification,
+} from '../../core/models/justification.model';
+import { JustificationService } from '../../core/services/impl/justification.service';
 
 @Component({
   selector: 'app-absence-detail',
@@ -13,14 +19,21 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class AbsenceDetailComponent implements OnInit {
   private readonly absenceService: AbsenceService = inject(AbsenceService);
+  private readonly justificationService: JustificationService =
+    inject(JustificationService);
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
   private readonly router: Router = inject(Router);
+  private readonly authService: AuthService = inject(AuthService);
+  statutJustification?: StatutJustification;
+  adminId: string | null = null;
+  public StatutJustification = StatutJustification;
 
   absenceDetail: AbsenceDetail | null = null;
   isLoading = true;
   error: string | null = null;
 
   ngOnInit(): void {
+    this.loadAdminId();
     this.loadAbsenceDetail();
   }
 
@@ -48,37 +61,54 @@ export class AbsenceDetailComponent implements OnInit {
     });
   }
 
-  validateJustification(): void {
-    if (this.absenceDetail?.justification?.id) {
-      // Logique pour valider la justification
-      console.log(
-        'Validating justification:',
-        this.absenceDetail.justification.id
-      );
-      // Vous pouvez ajouter un service pour gérer la validation
+  private loadAdminId(): void {
+    const user = this.authService.getCurrentUser();
+    if (!user) {
+      console.error('Aucun utilisateur connecté');
+      this.router.navigate(['/login']);
+      return;
     }
+
+    if (!user.realId) {
+      console.error("L'utilisateur n'a pas d'ID administrateur");
+      this.error = "Vous n'avez pas les droits nécessaires";
+      return;
+    }
+
+    this.adminId = user.realId;
   }
 
-  rejectJustification(): void {
-    if (this.absenceDetail?.justification?.id) {
-      // Logique pour rejeter la justification
-      console.log(
-        'Rejecting justification:',
-        this.absenceDetail.justification.id
-      );
-      // Vous pouvez ajouter un service pour gérer le rejet
+  traiterJustification(statut: StatutJustification): void {
+    if (!this.absenceDetail?.justification?.id) {
+      console.error('ID de justification manquant', this.absenceDetail);
+      this.error = 'Impossible de traiter : justification introuvable';
+      return;
     }
-  }
 
-  contactStudent(): void {
-    if (this.absenceDetail?.absence) {
-      // Logique pour contacter l'étudiant
-      console.log(
-        'Contacting student:',
-        this.absenceDetail.absence.etudiantMatricule
-      );
-      // Vous pouvez implémenter l'envoi d'email ou redirection vers un système de messagerie
+    if (!this.adminId) {
+      console.error('ID administrateur manquant', this.adminId);
+      this.error = "Vous devez être connecté en tant qu'administrateur";
+      return;
     }
+
+    const request: JustificationTraitementRequest = {
+      justificationId: this.absenceDetail.justification.id,
+      statut: statut,
+      adminValidateurId: this.adminId,
+    };
+
+    this.isLoading = true;
+    this.justificationService.traiterJustification(request).subscribe({
+      next: () => {
+        this.isLoading = false;
+        this.router.navigate(['/absences']);
+      },
+      error: (err) => {
+        console.error('Error processing justification:', err);
+        this.isLoading = false;
+        this.error = 'Erreur lors du traitement de la justification';
+      },
+    });
   }
 
   viewHistory(): void {

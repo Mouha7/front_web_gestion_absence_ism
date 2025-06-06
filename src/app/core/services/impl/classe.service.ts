@@ -2,17 +2,18 @@ import { Observable } from 'rxjs';
 import { Classe } from '../../models/Classe.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { IClasseService } from '../IClasseService';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ClasseService {
+export class ClasseService implements IClasseService {
   private readonly apiUrl =
     'https://ism-absences-api.onrender.com/api/web/admin';
   constructor(private readonly http: HttpClient) {}
 
   // récupérer tous les absences
-  getAbsence(): Observable<Classe[]> {
+  getAllClasses(): Observable<Classe[]> {
     return this.http.get<Classe[]>(this.apiUrl + '/classes');
   }
 }

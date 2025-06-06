@@ -480,6 +480,7 @@
         <h3 class="text-lg font-bold text-gray-900 mb-4">Actions Rapides</h3>
         <div class="space-y-3">
           <button
+            (click)="traiterJustification(StatutJustification.VALIDEE)"
             class="w-full px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200 flex items-center justify-center"
             *ngIf="absenceDetail?.justification?.statut === 'EN_ATTENTE'"
           >
@@ -487,18 +488,13 @@
             Valider la justification
           </button>
           <button
+            (click)="traiterJustification(StatutJustification.REJETEE)"
             class="w-full px-4 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-200 flex items-center justify-center"
             *ngIf="absenceDetail?.justification?.statut === 'EN_ATTENTE'"
           >
             <i class="fas fa-times mr-2"></i>
             Rejeter la justification
           </button>
-          <!-- <button
-            class="w-full px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 flex items-center justify-center"
-          >
-            <i class="fas fa-envelope mr-2"></i>
-            Contacter l'étudiant
-          </button> -->
           <button
             class="w-full px-4 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors duration-200 flex items-center justify-center"
           >

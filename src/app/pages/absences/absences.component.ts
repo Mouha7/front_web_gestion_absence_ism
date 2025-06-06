@@ -2,7 +2,6 @@ import { Component, inject, OnInit } from '@angular/core';
 import { AbsenceService } from '../../core/services/impl/absence.service';
 import { Absence } from '../../core/models/absence.model';
 import { CommonModule } from '@angular/common';
-import { Justification } from '../../core/models/justification.model';
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { Router } from '@angular/router';
 
@@ -20,7 +19,6 @@ export class AbsencesComponent implements OnInit {
   absences: Absence[] = [];
 
   isLoading = true;
-  selectedJustification: Justification | null = null;
 
   ngOnInit(): void {
     this.loadAbsences();

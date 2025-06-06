@@ -1,0 +1,18 @@
+import { Injectable } from '@angular/core';
+import { IEtudiantService } from '../IEtudiantService';
+import { Observable } from 'rxjs';
+import { UtilisateurMobileDto } from '../../models/utilisateur.model';
+import { HttpClient } from '@angular/common/http';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class EtudiantService implements IEtudiantService {
+  private readonly apiUrl =
+    'https://ism-absences-api.onrender.com/api/web/etudiant';
+
+  constructor(private readonly http: HttpClient) {}
+  getAllEtudians(): Observable<UtilisateurMobileDto[]> {
+    return this.http.get<UtilisateurMobileDto[]>(this.apiUrl);
+  }
+}
