@@ -3,6 +3,7 @@ import { Classe } from '../../core/models/Classe.model';
 import { ClasseService } from '../../core/services/impl/classe.service';
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-classe',
@@ -12,6 +13,7 @@ import { CommonModule } from '@angular/common';
 })
 export class ClasseComponent {
   private readonly classeService: ClasseService = inject(ClasseService);
+  private readonly router: Router = inject(Router);
 
   classes: Classe[] = [];
   isLoading = true;
@@ -40,6 +42,10 @@ export class ClasseComponent {
         this.isLoading = false;
       },
     });
+  }
+
+  onViewEtudiants(classeId: string): void {
+    this.router.navigate(['/classes', classeId, 'etudiants']);
   }
 
   getSkeletonItems(): number[] {

@@ -86,6 +86,7 @@
           id="type-absence-select"
           class="w-full px-3 py-2 border border-orange-300 rounded-lg focus:ring-2 focus:ring-[#E07B1E] focus:border-[#E07B1E]"
           [disabled]="isLoading"
+          (change)="onTypeChange($event)"
         >
           <option value="">Tous les types</option>
           <option value="RETARD">Retard</option>
@@ -103,6 +104,7 @@
           type="date"
           class="w-full px-3 py-2 border border-orange-300 rounded-lg focus:ring-2 focus:ring-[#E07B1E] focus:border-[#E07B1E]"
           [disabled]="isLoading"
+          (change)="onDateChange($event)"
         />
       </div>
 
@@ -124,6 +126,7 @@
         <button
           class="w-full bg-[#E07B1E] text-white px-4 py-2 rounded-lg hover:bg-[#e07c1eec] transition-colors duration-200 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
           [disabled]="isLoading"
+          (click)="loadAbsences(0)"
         >
           <i class="fas fa-search mr-2"></i>
           Rechercher

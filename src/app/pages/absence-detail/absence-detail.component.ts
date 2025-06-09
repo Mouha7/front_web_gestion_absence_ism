@@ -3,7 +3,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { AbsenceDetail } from '../../core/models/absence.model';
 import { AbsenceService } from '../../core/services/impl/absence.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../core/services/impl/auth.service';
 import {
   JustificationTraitementRequest,
@@ -13,7 +13,7 @@ import { JustificationService } from '../../core/services/impl/justification.ser
 
 @Component({
   selector: 'app-absence-detail',
-  imports: [CommonModule, SidebarComponent],
+  imports: [CommonModule, SidebarComponent, RouterModule],
   templateUrl: './absence-detail.component.html',
   styleUrl: './absence-detail.component.css',
 })
