@@ -17,6 +17,10 @@ export class AbsencesComponent implements OnInit {
   private readonly router: Router = inject(Router);
 
   absences: Absence[] = [];
+  totalPages = 0;
+  currentPage = 0;
+  totalItems = 0;
+  pages: number[] = [];
   public TypeAbsence = TypeAbsence;
   isLoading = true;
 
@@ -25,18 +29,36 @@ export class AbsencesComponent implements OnInit {
     console.log(this.absences);
   }
 
-  loadAbsences(): void {
+  loadAbsences(page: number = 0): void {
     this.isLoading = true;
-    this.absenceService.getAbsence().subscribe({
-      next: (data: Absence[]) => {
-        this.absences = data;
+    this.absenceService.getAbsence(page).subscribe({
+      next: (response) => {
+        this.absences = response.results;
+        this.totalItems = response.totalItems;
+        this.totalPages = response.totalPages;
+        this.currentPage = response.currentPage;
+        this.pages = Array.from({ length: response.totalPages }, (_, i) => i);
         this.isLoading = false;
       },
       error: (err) => {
-        console.error('Error:', err);
+        console.error('Erreur:', err);
         this.isLoading = false;
       },
     });
+  }
+
+  changePage(page: number): void {
+    if (page >= 0 && page < this.totalPages) {
+      this.loadAbsences(page);
+    }
+  }
+
+  nextPage(): void {
+    this.changePage(this.currentPage + 1);
+  }
+
+  previousPage(): void {
+    this.changePage(this.currentPage - 1);
   }
 
   getSkeletonItems(): number[] {

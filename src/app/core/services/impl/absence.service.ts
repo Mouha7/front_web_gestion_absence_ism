@@ -1,20 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
-import { Absence, AbsenceDetail } from '../../models/absence.model';
+import { AbsenceDetail, PaginatedAbsences } from '../../models/absence.model';
 import { IAbsenceService } from '../IAbsenceService';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AbsenceService implements IAbsenceService {
-  private readonly apiUrl =
-    'https://ism-absences-api.onrender.com/api/web/absences';
+  private readonly apiUrl = 'http://localhost:8080/api/web/absences';
   constructor(private readonly http: HttpClient) {}
 
   // récupérer tous les absences
-  getAbsence(): Observable<Absence[]> {
-    return this.http.get<Absence[]>(this.apiUrl + '/annee-active');
+  getAbsence(page: number = 0): Observable<PaginatedAbsences> {
+    return this.http.get<PaginatedAbsences>(
+      `${this.apiUrl}/annee-active?page=${page}`
+    );
   }
 
   // Récupérer une absence par ID

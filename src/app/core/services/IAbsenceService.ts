@@ -1,7 +1,11 @@
 import { Observable } from 'rxjs';
-import { Absence, AbsenceDetail } from '../models/absence.model';
+import {
+  Absence,
+  AbsenceDetail,
+  PaginatedAbsences,
+} from '../models/absence.model';
 
 export interface IAbsenceService {
-  getAbsence(): Observable<Absence[]>;
+  getAbsence(): Observable<PaginatedAbsences>;
   getAbsenceDetail(id: string): Observable<AbsenceDetail>;
 }

@@ -8,8 +8,7 @@ import { IClasseService } from '../IClasseService';
   providedIn: 'root',
 })
 export class ClasseService implements IClasseService {
-  private readonly apiUrl =
-    'https://ism-absences-api.onrender.com/api/web/admin';
+  private readonly apiUrl = 'http://localhost:8080/api/web';
   constructor(private readonly http: HttpClient) {}
 
   // récupérer tous les absences
