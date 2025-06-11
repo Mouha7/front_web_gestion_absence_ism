@@ -33,6 +33,7 @@ export class AbsenceDetailComponent implements OnInit {
   error: string | null = null;
 
   ngOnInit(): void {
+    console.log(this.authService.getCurrentUser());
     this.loadAdminId();
     this.loadAbsenceDetail();
   }

@@ -29,6 +29,7 @@ export class AuthService {
   private storeAuthData(authData: LoginResponse) {
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', JSON.stringify(authData.utilisateur));
+    localStorage.setItem('realId', authData.realId);
   }
 
   private clearAuthData() {
@@ -45,6 +46,7 @@ export class AuthService {
   autoLogin() {
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
+    const realId = localStorage.getItem('realId');
 
     if (token && user) {
       this.currentUser = {
@@ -54,7 +56,7 @@ export class AuthService {
         userId: JSON.parse(user).id,
         role: JSON.parse(user).role as Role,
         redirectEndpoint: '',
-        realId: '',
+        realId: realId!,
       };
       return true;
     }
