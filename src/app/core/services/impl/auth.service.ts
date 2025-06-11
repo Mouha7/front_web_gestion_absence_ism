@@ -40,7 +40,10 @@ export class AuthService {
   logout(): Observable<any> {
     this.clearAuthData();
     this.currentUser = undefined;
-    return this.http.post('http://localhost:8080/api/web/auth/logout', {});
+    return this.http.post(
+      'https://ism-absences-api.onrender.com/api/web/auth/logout',
+      {}
+    );
   }
 
   autoLogin() {
