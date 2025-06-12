@@ -5,22 +5,24 @@
   <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
     <!-- Header -->
     <div class="mb-8">
-      <h1 class="text-3xl font-bold text-gray-800 mb-2">Gestion des Classes</h1>
-      <p class="text-gray-600">Tableau de bord et liste des classes</p>
+      <h1 class="text-3xl font-bold text-gray-800 mb-2">Gestion des Vigiles</h1>
+      <p class="text-gray-600">
+        Tableau de bord et liste des agents de sécurité
+      </p>
     </div>
 
     <!-- Dashboard Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-      <!-- Total Classes -->
+      <!-- Total Vigiles -->
       <div
         class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-[#E07B1E] hover:shadow-xl transition-shadow duration-300"
       >
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-sm font-medium text-gray-600">Total Classes</p>
+            <p class="text-sm font-medium text-gray-600">Total Vigiles</p>
             <p class="text-3xl font-bold text-[#3C1F0D]">
               <ng-container *ngIf="!isLoading; else skeletonNumber">{{
-                classes.length
+                vigiles.length
               }}</ng-container>
               <ng-template #skeletonNumber>
                 <span
@@ -31,33 +33,38 @@
           </div>
           <div class="bg-[#E07B1E] bg-opacity-10 p-3 rounded-full">
             <svg
-              class="w-8 h-8 text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-shield-user-icon lucide-shield-user text-white"
             >
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-              ></path>
+                d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"
+              />
+              <path d="M6.376 18.91a6 6 0 0 1 11.249.003" />
+              <circle cx="12" cy="11" r="4" />
             </svg>
           </div>
         </div>
       </div>
 
-      <!-- Total Étudiants -->
+      <!-- Vigiles Actifs -->
       <div
         class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-green-500 hover:shadow-xl transition-shadow duration-300"
       >
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-sm font-medium text-gray-600">Total Étudiants</p>
+            <p class="text-sm font-medium text-gray-600">Vigiles Actifs</p>
             <p class="text-3xl font-bold text-[#3C1F0D]">
-              <ng-container *ngIf="!isLoading; else skeletonNumber2">
-                345
-              </ng-container>
+              <ng-container *ngIf="!isLoading; else skeletonNumber2">{{
+                vigiles.length
+              }}</ng-container>
               <ng-template #skeletonNumber2>
                 <span
                   class="animate-pulse bg-gray-200 rounded h-8 w-12 inline-block"
@@ -76,24 +83,26 @@
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
-                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
               ></path>
             </svg>
           </div>
         </div>
       </div>
 
-      <!-- Filières -->
+      <!-- Pointages Aujourd'hui -->
       <div
         class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-blue-500 hover:shadow-xl transition-shadow duration-300"
       >
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-sm font-medium text-gray-600">Filières</p>
+            <p class="text-sm font-medium text-gray-600">
+              Pointages Aujourd'hui
+            </p>
             <p class="text-3xl font-bold text-[#3C1F0D]">
-              <ng-container *ngIf="!isLoading; else skeletonNumber3">
-                {{ uniqueFilieres.length }}
-              </ng-container>
+              <ng-container *ngIf="!isLoading; else skeletonNumber3"
+                >24</ng-container
+              >
               <ng-template #skeletonNumber3>
                 <span
                   class="animate-pulse bg-gray-200 rounded h-8 w-12 inline-block"
@@ -112,29 +121,23 @@
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
-                d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
               ></path>
             </svg>
           </div>
         </div>
       </div>
 
-      <!-- Niveaux -->
+      <!-- Résultats de Recherche Card (nouveauté) -->
       <div
+        *ngIf="searchTerm"
         class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-purple-500 hover:shadow-xl transition-shadow duration-300"
       >
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-sm font-medium text-gray-600">Niveaux</p>
+            <p class="text-sm font-medium text-gray-600">Résultats Trouvés</p>
             <p class="text-3xl font-bold text-[#3C1F0D]">
-              <ng-container *ngIf="!isLoading; else skeletonNumber4">
-                3
-              </ng-container>
-              <ng-template #skeletonNumber4>
-                <span
-                  class="animate-pulse bg-gray-200 rounded h-8 w-12 inline-block"
-                ></span>
-              </ng-template>
+              {{ filteredVigiles.length }}
             </p>
           </div>
           <div class="bg-purple-100 p-3 rounded-full">
@@ -148,7 +151,7 @@
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
-                d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
               ></path>
             </svg>
           </div>
@@ -176,53 +179,18 @@
                 d="M12 6v6m0 0v6m0-6h6m-6 0H6"
               ></path>
             </svg>
-            Ajouter Classe
-          </button>
-
-          <!-- Bouton Reset Filters -->
-          <button
-            *ngIf="searchTerm || selectedFiliere"
-            (click)="resetFilters()"
-            class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-300 flex items-center gap-2"
-          >
-            <svg
-              class="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"
-              ></path>
-            </svg>
-            Réinitialiser
+            Ajouter Vigile
           </button>
         </div>
 
         <div class="flex items-center gap-4">
-          <!-- Filtre par filière -->
-          <select
-            [(ngModel)]="selectedFiliere"
-            (ngModelChange)="onFiliereChange()"
-            class="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#E07B1E] focus:border-transparent"
-          >
-            <option value="">Toutes les filières</option>
-            <option *ngFor="let filiere of uniqueFilieres" [value]="filiere">
-              {{ filiere }}
-            </option>
-          </select>
-
-          <!-- Champ de recherche -->
           <div class="relative">
             <input
               type="text"
               [(ngModel)]="searchTerm"
-              (ngModelChange)="onSearchChange()"
-              placeholder="Rechercher une classe..."
-              class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E07B1E] focus:border-transparent"
+              (input)="onSearchChange()"
+              placeholder="Rechercher un vigile..."
+              class="pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E07B1E] focus:border-transparent w-64"
             />
             <svg
               class="absolute left-3 top-2.5 w-5 h-5 text-gray-400"
@@ -237,30 +205,52 @@
                 d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
               ></path>
             </svg>
+            <!-- Bouton pour effacer la recherche -->
+            <button
+              *ngIf="searchTerm"
+              (click)="clearSearch()"
+              class="absolute right-3 top-2.5 w-5 h-5 text-gray-400 hover:text-gray-600 transition-colors"
+            >
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                ></path>
+              </svg>
+            </button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Results Info -->
-    <div
-      *ngIf="!isLoading && (searchTerm || selectedFiliere)"
-      class="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4"
-    >
-      <p class="text-blue-800 text-sm">
-        <span class="font-medium">{{ filteredClasses.length }}</span>
-        classe(s) trouvée(s)
-        <span *ngIf="searchTerm"> pour "{{ searchTerm }}"</span>
-        <span *ngIf="selectedFiliere">
-          dans la filière "{{ selectedFiliere }}"</span
+    <!-- Message de recherche -->
+    <div *ngIf="searchTerm && !isLoading" class="mb-4">
+      <p class="text-sm text-gray-600">
+        <span class="font-medium">{{ filteredVigiles.length }}</span>
+        résultat(s) trouvé(s) pour "<span class="font-medium text-[#E07B1E]">{{
+          searchTerm
+        }}</span
+        >"
+        <button
+          (click)="clearSearch()"
+          class="ml-2 text-[#E07B1E] hover:text-[#d16a0a] underline text-sm"
         >
+          Effacer la recherche
+        </button>
       </p>
     </div>
 
-    <!-- Classes List -->
+    <!-- Vigiles List -->
     <div class="bg-white rounded-xl shadow-lg overflow-hidden">
       <div class="px-6 py-4 border-b border-gray-200">
-        <h2 class="text-xl font-semibold text-[#3C1F0D]">Liste des Classes</h2>
+        <h2 class="text-xl font-semibold text-[#3C1F0D]">
+          Liste des Vigiles
+          <span *ngIf="searchTerm" class="text-sm font-normal text-gray-500">
+            ({{ filteredVigiles.length }} sur {{ vigiles.length }})
+          </span>
+        </h2>
       </div>
 
       <!-- Loading Skeleton -->
@@ -281,13 +271,13 @@
         </div>
       </div>
 
-      <!-- Classes Data -->
+      <!-- Vigiles Data (utilise maintenant filteredVigiles) -->
       <div
-        *ngIf="!isLoading && filteredClasses.length > 0"
+        *ngIf="!isLoading && filteredVigiles.length > 0"
         class="divide-y divide-gray-200"
       >
         <div
-          *ngFor="let classe of filteredClasses"
+          *ngFor="let vigile of filteredVigiles"
           class="p-6 hover:bg-gray-50 transition-colors duration-200"
         >
           <div class="flex items-center justify-between">
@@ -303,49 +293,36 @@
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  class="lucide lucide-school-icon lucide-school text-white"
+                  class="lucide lucide-shield-user-icon lucide-shield-user text-white"
                 >
-                  <path d="M14 22v-4a2 2 0 1 0-4 0v4" />
                   <path
-                    d="m18 10 3.447 1.724a1 1 0 0 1 .553.894V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-7.382a1 1 0 0 1 .553-.894L6 10"
+                    d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"
                   />
-                  <path d="M18 5v17" />
-                  <path d="m4 6 7.106-3.553a2 2 0 0 1 1.788 0L20 6" />
-                  <path d="M6 5v17" />
-                  <circle cx="12" cy="9" r="2" />
+                  <path d="M6.376 18.91a6 6 0 0 1 11.249.003" />
+                  <circle cx="12" cy="11" r="4" />
                 </svg>
               </div>
               <div>
                 <h3 class="text-lg font-semibold text-[#3C1F0D]">
-                  {{ classe.nom }}
+                  {{ vigile.nom }} {{ vigile.prenom }}
                 </h3>
-                <p class="text-gray-600">filière : {{ classe.filiere }}</p>
+                <p class="text-gray-600">{{ vigile.email }}</p>
                 <div class="flex items-center gap-4 mt-2">
                   <span
                     class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#E07B1E] bg-opacity-10 text-white"
                   >
-                    {{ classe.niveau }}
+                    {{ vigile.role }}
                   </span>
-                  <span
-                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800"
+                  <span *ngIf="vigile.badge" class="text-sm text-gray-500"
+                    >Badge: {{ vigile.badge }}</span
                   >
-                    {{ classe.effectif }} étudiants
-                  </span>
                 </div>
               </div>
             </div>
 
             <div class="flex items-center space-x-3">
-              <div class="text-right">
-                <p class="text-sm text-gray-500">Effectif</p>
-                <p class="text-2xl font-bold text-[#3C1F0D]">
-                  {{ classe.effectif }}
-                </p>
-              </div>
-              <div class="w-px h-12 bg-gray-200 mx-3"></div>
               <button
                 class="text-[#E07B1E] hover:text-[#d16a0a] p-2 rounded-lg hover:bg-[#E07B1E] hover:bg-opacity-10 transition-colors duration-200"
-                title="Modifier"
               >
                 <svg
                   class="w-5 h-5"
@@ -362,27 +339,7 @@
                 </svg>
               </button>
               <button
-                class="text-blue-600 hover:text-blue-800 p-2 rounded-lg hover:bg-blue-50 transition-colors duration-200"
-                title="Voir étudiants"
-                (click)="onViewEtudiants(classe.id)"
-              >
-                <svg
-                  class="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                  ></path>
-                </svg>
-              </button>
-              <button
                 class="text-red-600 hover:text-red-800 p-2 rounded-lg hover:bg-red-50 transition-colors duration-200"
-                title="Supprimer"
               >
                 <svg
                   class="w-5 h-5"
@@ -408,13 +365,9 @@
         </div>
       </div>
 
-      <!-- Empty State - No Results -->
+      <!-- Empty State - Aucun résultat de recherche -->
       <div
-        *ngIf="
-          !isLoading &&
-          filteredClasses.length === 0 &&
-          (searchTerm || selectedFiliere)
-        "
+        *ngIf="!isLoading && searchTerm && filteredVigiles.length === 0"
         class="text-center py-12"
       >
         <svg
@@ -431,21 +384,25 @@
           ></path>
         </svg>
         <h3 class="mt-4 text-lg font-semibold text-gray-900">
-          Aucun résultat trouvé
+          Aucun vigile trouvé
         </h3>
         <p class="mt-2 text-gray-600">
-          Essayez de modifier vos critères de recherche.
+          Aucun résultat pour "<span class="font-medium">{{ searchTerm }}</span
+          >". Essayez avec d'autres mots-clés.
         </p>
         <button
-          (click)="resetFilters()"
+          (click)="clearSearch()"
           class="mt-4 bg-[#E07B1E] hover:bg-[#d16a0a] text-white px-6 py-2 rounded-lg font-medium transition-colors duration-300"
         >
-          Réinitialiser les filtres
+          Effacer la recherche
         </button>
       </div>
 
-      <!-- Empty State - No Classes -->
-      <div *ngIf="!isLoading && classes.length === 0" class="text-center py-12">
+      <!-- Empty State - Aucun vigile du tout -->
+      <div
+        *ngIf="!isLoading && !searchTerm && vigiles.length === 0"
+        class="text-center py-12"
+      >
         <svg
           class="mx-auto h-24 w-24 text-gray-400"
           fill="none"
@@ -456,19 +413,19 @@
             stroke-linecap="round"
             stroke-linejoin="round"
             stroke-width="1"
-            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
           ></path>
         </svg>
         <h3 class="mt-4 text-lg font-semibold text-gray-900">
-          Aucune classe trouvée
+          Aucun vigile trouvé
         </h3>
         <p class="mt-2 text-gray-600">
-          Commencez par ajouter votre première classe.
+          Commencez par ajouter votre premier vigile.
         </p>
         <button
           class="mt-4 bg-[#E07B1E] hover:bg-[#d16a0a] text-white px-6 py-2 rounded-lg font-medium transition-colors duration-300"
         >
-          Ajouter une classe
+          Ajouter un vigile
         </button>
       </div>
     </div>

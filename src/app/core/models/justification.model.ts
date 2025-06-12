@@ -20,6 +20,12 @@ export interface JustificationForDetailAbsence {
   nomValidateur: string;
 }
 
+export interface JustificationTraitementRequest {
+  justificationId: string;
+  statut: StatutJustification;
+  adminValidateurId: string;
+}
+
 export enum StatutJustification {
   EN_ATTENTE = 'EN_ATTENTE',
   VALIDEE = 'VALIDEE',

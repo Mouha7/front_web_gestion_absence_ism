@@ -4,14 +4,27 @@
 <main class="ml-[230px] p-8 min-h-screen">
   <!-- Header Section -->
   <div class="mb-8 animate-fade-in">
+    <button
+      routerLink="/absences"
+      class="bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded-lg font-medium transition-colors duration-300 flex items-center gap-2 mb-5"
+    >
+      <svg
+        class="w-5 h-5"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M10 19l-7-7m0 0l7-7m-7 7h18"
+        ></path>
+      </svg>
+      Retour
+    </button>
     <div class="flex items-center justify-between">
       <div class="flex items-center space-x-4">
-        <button
-          class="p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200"
-          onclick="history.back()"
-        >
-          <i class="fas fa-arrow-left text-gray-600"></i>
-        </button>
         <div>
           <h1 class="text-3xl font-bold text-gray-900">Détail de l'Absence</h1>
           <p class="text-gray-600 mt-1">
@@ -480,6 +493,7 @@
         <h3 class="text-lg font-bold text-gray-900 mb-4">Actions Rapides</h3>
         <div class="space-y-3">
           <button
+            (click)="traiterJustification(StatutJustification.VALIDEE)"
             class="w-full px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200 flex items-center justify-center"
             *ngIf="absenceDetail?.justification?.statut === 'EN_ATTENTE'"
           >
@@ -487,18 +501,13 @@
             Valider la justification
           </button>
           <button
+            (click)="traiterJustification(StatutJustification.REJETEE)"
             class="w-full px-4 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-200 flex items-center justify-center"
             *ngIf="absenceDetail?.justification?.statut === 'EN_ATTENTE'"
           >
             <i class="fas fa-times mr-2"></i>
             Rejeter la justification
           </button>
-          <!-- <button
-            class="w-full px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 flex items-center justify-center"
-          >
-            <i class="fas fa-envelope mr-2"></i>
-            Contacter l'étudiant
-          </button> -->
           <button
             class="w-full px-4 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors duration-200 flex items-center justify-center"
           >

@@ -17,10 +17,7 @@ export class AuthService {
 
   login(data: LoginRequestDTO): Observable<LoginResponse> {
     return this.http
-      .post<LoginResponse>(
-        'https://ism-absences-api.onrender.com/api/web/auth/login',
-        data
-      )
+      .post<LoginResponse>('http://localhost:8080/api/web/auth/login', data)
       .pipe(
         tap((response) => {
           this.storeAuthData(response);
@@ -32,6 +29,7 @@ export class AuthService {
   private storeAuthData(authData: LoginResponse) {
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', JSON.stringify(authData.utilisateur));
+    localStorage.setItem('realId', authData.realId);
   }
 
   private clearAuthData() {
@@ -51,6 +49,7 @@ export class AuthService {
   autoLogin() {
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
+    const realId = localStorage.getItem('realId');
 
     if (token && user) {
       this.currentUser = {
@@ -60,7 +59,7 @@ export class AuthService {
         userId: JSON.parse(user).id,
         role: JSON.parse(user).role as Role,
         redirectEndpoint: '',
-        realId: '',
+        realId: realId!,
       };
       return true;
     }

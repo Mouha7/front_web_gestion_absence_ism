@@ -12,7 +12,7 @@ import { LoginResponse } from '../../core/models/utilisateur.model';
 export class SidebarComponent {
   currentUser?: LoginResponse;
 
-  constructor(private authService: AuthService) {}
+  constructor(private readonly authService: AuthService) {}
 
   ngOnInit(): void {
     if (this.authService.isLoggedIn()) {
