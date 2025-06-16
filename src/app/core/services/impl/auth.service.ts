@@ -88,4 +88,80 @@ export class AuthService {
   getRole(): string | undefined {
     return this.currentUser?.role;
   }
+
+  // ------------------- pour cookies -----------
+  // private readonly currentUser = new BehaviorSubject<LoginResponse | null>(
+  //   CookieService.getUserFromCookie()
+  // );
+  // currentUser$ = this.currentUser.asObservable();
+
+  // constructor(
+  //   private readonly http: HttpClient,
+  //   private readonly router: Router
+  // ) {}
+
+  // login(data: LoginRequestDTO): Observable<boolean> {
+  //   return this.http
+  //     .post<LoginResponse>('https://ism-absences-api.onrender.com/api/auth/login', data, {
+  //       withCredentials: true,
+  //     })
+  //     .pipe(
+  //       tap((res) => {
+  //         this.currentUser.next(res);
+  //         CookieService.setCookie('currentUser', res.utilisateur);
+  //         CookieService.setCookie('roleUser', res.role);
+  //       }),
+  //       map(() => true),
+  //       catchError(() => of(false))
+  //     );
+  // }
+
+  // logout(): void {
+  //   this.http
+  //     .post('https://ism-absences-api.onrender.com/api/auth/logout', {
+  //       withCredentials: true,
+  //     })
+  //     .subscribe(() => {
+  //       this.currentUser.next(null);
+  //       CookieService.deleteCookie('currentUser');
+  //       CookieService.deleteCookie('roleUser');
+  //       this.router.navigate(['/login']);
+  //     });
+  // }
+
+  // autoLogin(): Observable<boolean> {
+  //   return this.http
+  //     .get<LoginResponse>('https://ism-absences-api.onrender.com/api/auth/me', {
+  //       withCredentials: true,
+  //     })
+  //     .pipe(
+  //       tap((response) => {
+  //         this.currentUser.next(response);
+  //         CookieService.setCookie('currentUser', response.utilisateur);
+  //         CookieService.setCookie('roleUser', response.role);
+  //       }),
+  //       map(() => true),
+  //       catchError((error) => {
+  //         console.error('Auto-login failed:', error);
+  //         this.currentUser.next(null);
+  //         return of(false);
+  //       })
+  //     );
+  // }
+
+  // getCurrentUser(): LoginResponse | null {
+  //   return this.currentUser.value;
+  // }
+
+  // hasRole(role: Role): boolean {
+  //   return this.currentUser.value?.role === role;
+  // }
+
+  // isAdmin(): boolean {
+  //   return this.hasRole(Role.ADMIN);
+  // }
+
+  // isLoggedIn(): boolean {
+  //   return !!this.currentUser;
+  // }
 }
