@@ -46,3 +46,12 @@ export interface ApiResponse<T> {
   status: string;
   type: string;
 }
+
+export interface StatAbsence {
+  totalAbsence: number;
+  totalRetard: number;
+  totalAbsenceRetard: number;
+  totalJustifie: number;
+  totalNonJustifie: number;
+  totalTraite: number;
+}
