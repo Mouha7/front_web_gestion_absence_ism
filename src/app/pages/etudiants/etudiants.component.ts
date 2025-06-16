@@ -3,6 +3,7 @@ import { EtudiantService } from '../../core/services/impl/etudiant.service';
 import { UtilisateurMobileDto } from '../../core/models/utilisateur.model';
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-etudiants',
@@ -12,6 +13,7 @@ import { CommonModule } from '@angular/common';
 })
 export class EtudiantsComponent {
   private readonly etudiantService: EtudiantService = inject(EtudiantService);
+  private readonly router: Router = inject(Router);
 
   etudiants: UtilisateurMobileDto[] = [];
   isLoading = true;
@@ -33,6 +35,10 @@ export class EtudiantsComponent {
         this.isLoading = false;
       },
     });
+  }
+
+  viewDetail(etudiantId: string) {
+    this.router.navigate(['/etudiants', etudiantId]);
   }
 
   getSkeletonItems(): number[] {

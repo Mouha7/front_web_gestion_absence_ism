@@ -257,9 +257,9 @@
               </div>
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
-              <div class="text-sm text-gray-900">{{ absence.coursNom }}</div>
+              <div class="text-sm text-gray-900">{{ absence.nomCours }}</div>
               <div class="text-sm text-gray-500">
-                {{ absence.salleNom }} - {{ absence.createdAt | date : "EEEE" }}
+                {{ absence.salle }} - {{ absence.createdAt | date : "EEEE" }}
                 {{ absence.createdAt | date : "shortTime" }}
               </div>
             </td>
@@ -287,8 +287,8 @@
               <span
                 class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800"
               >
-                @if (absence.justification != null) {
-                {{ absence.justification }}
+                @if (absence.statutJustification != null) {
+                {{ absence.statutJustification }}
                 } @else { non justifié }
               </span>
             </td>

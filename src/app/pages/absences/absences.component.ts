@@ -45,6 +45,7 @@ export class AbsencesComponent implements OnInit {
           this.currentPage = response.currentPage;
           this.pages = Array.from({ length: response.totalPages }, (_, i) => i);
           this.isLoading = false;
+          console.log(response.results);
         },
         error: (err) => {
           console.error('Erreur:', err);
