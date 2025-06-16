@@ -17,6 +17,7 @@ export class EtudiantsComponent {
 
   etudiants: UtilisateurMobileDto[] = [];
   isLoading = true;
+  classCount = 0;
 
   ngOnInit(): void {
     this.loadEtudiants();
@@ -29,6 +30,11 @@ export class EtudiantsComponent {
       next: (data: UtilisateurMobileDto[]) => {
         this.etudiants = data;
         this.isLoading = false;
+        this.classCount = [
+          ...new Set(
+            this.etudiants.filter((e) => e.classe).map((e) => e.classe)
+          ),
+        ].length;
       },
       error: (err) => {
         console.error('Error:', err);

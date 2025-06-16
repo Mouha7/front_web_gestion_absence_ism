@@ -99,8 +99,7 @@
             <p class="text-sm font-medium text-gray-600">Classes</p>
             <p class="text-3xl font-bold text-[#3C1F0D]">
               <ng-container *ngIf="!isLoading; else skeletonNumber3">
-                <!-- {{ [...new Set(etudiants.filter(e => e.classe).map(e => e.classe))].length }} -->
-                23
+                {{ classCount }}
               </ng-container>
               <ng-template #skeletonNumber3>
                 <span
