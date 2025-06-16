@@ -28,3 +28,10 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(req);
   }
 }
+
+// ---------- Autre façon -----
+
+// export const authInterceptor: HttpInterceptorFn = (req, next) => {
+//   const reqWithCredentials = req.clone({ withCredentials: true });
+//   return next(reqWithCredentials);
+// };
