@@ -24,7 +24,7 @@ export class ClasseComponent {
   selectedFiliere = '';
 
   get skeletonItems() {
-    return Array(6).fill(0); // Affiche 6 lignes de skeleton par défaut
+    return Array(4).fill(0);
   }
 
   ngOnInit(): void {

@@ -17,7 +17,10 @@ export class AuthService {
 
   login(data: LoginRequestDTO): Observable<LoginResponse> {
     return this.http
-      .post<LoginResponse>('http://localhost:8080/api/web/auth/login', data)
+      .post<LoginResponse>(
+        'https://ism-absences-api.onrender.com/api/web/auth/login',
+        data
+      )
       .pipe(
         tap((response) => {
           this.storeAuthData(response);
